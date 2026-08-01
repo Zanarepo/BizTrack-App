@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthLayout } from '../layouts/AuthLayout';
 import { AppLayout } from '../layouts/AppLayout';
+import { AdminLayout } from '../layouts/AdminLayout';
 import { ProtectedRoute } from './ProtectedRoute';
+import { AdminRoute } from './AdminRoute';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 
 // 🚀 Performance Optimization: Route-Level Code Splitting
@@ -17,6 +19,14 @@ const Login = React.lazy(() =>
 );
 const Register = React.lazy(() =>
   import('../pages/Register').then((module) => ({ default: module.Register })),
+);
+const AdminSignup = React.lazy(() =>
+  import('../pages/AdminSignup').then((module) => ({ default: module.AdminSignup })),
+);
+const PendingVerification = React.lazy(() =>
+  import('../pages/PendingVerification').then((module) => ({
+    default: module.PendingVerification,
+  })),
 );
 const ForgotPassword = React.lazy(() =>
   import('../pages/ForgotPassword').then((module) => ({ default: module.ForgotPassword })),
@@ -68,6 +78,20 @@ const ReportsPage = React.lazy(() =>
   import('../pages/ReportsPage').then((module) => ({ default: module.ReportsPage })),
 );
 
+// Admin Routes
+const AdminDashboard = React.lazy(() =>
+  import('../pages/admin/AdminDashboard').then((module) => ({ default: module.AdminDashboard })),
+);
+const AdminUsers = React.lazy(() =>
+  import('../pages/admin/AdminUsers').then((module) => ({ default: module.AdminUsers })),
+);
+const AdminBusinesses = React.lazy(() =>
+  import('../pages/admin/AdminBusinesses').then((module) => ({ default: module.AdminBusinesses })),
+);
+const AdminFinancials = React.lazy(() =>
+  import('../pages/admin/AdminFinancials').then((module) => ({ default: module.AdminFinancials })),
+);
+
 const SuspenseFallback = () => (
   <div
     style={{
@@ -91,12 +115,13 @@ export const AppRoutes: React.FC = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/design-system" element={<DesignSystem />} />
 
-        {/* Authentication Screens (Wrapped in AuthLayout) */}
+        {/* Public Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/admin-signup" element={<AdminSignup />} />
+          <Route path="/pending-verification" element={<PendingVerification />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
           {/* Protected Onboarding Screen for Authenticated Users without a Business */}
           <Route element={<ProtectedRoute requireBusiness={false} />}>
             <Route path="/onboarding" element={<BusinessOnboarding />} />
@@ -118,6 +143,16 @@ export const AppRoutes: React.FC = () => {
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
+          </Route>
+        </Route>
+
+        {/* Protected Admin Routes */}
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/businesses" element={<AdminBusinesses />} />
+            <Route path="/admin/financials" element={<AdminFinancials />} />
           </Route>
         </Route>
 

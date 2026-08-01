@@ -7,6 +7,7 @@ export interface Profile {
   phone?: string;
   security_question?: string;
   security_answer?: string;
+  role?: 'user' | 'admin' | 'superadmin' | 'pending_admin';
   created_at?: string;
   updated_at?: string;
 }
@@ -16,7 +17,10 @@ export interface AuthContextType {
   profile: Profile | null;
   session: Session | null;
   isLoading: boolean;
-  signIn: (identifier: string, passwordOrPin?: string) => Promise<{ error: Error | null }>;
+  signIn: (
+    identifier: string,
+    passwordOrPin?: string,
+  ) => Promise<{ error: Error | null; user?: User | null }>;
   signUp: (
     identifier: string,
     passwordOrPin?: string,
@@ -25,6 +29,7 @@ export interface AuthContextType {
       phone?: string;
       security_question?: string;
       security_answer?: string;
+      requested_role?: string;
     },
   ) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;

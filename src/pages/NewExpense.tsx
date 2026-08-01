@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import { useExpenses } from '../hooks/useExpenses';
+import { useAuditLog } from '../hooks/useAuditLog';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -13,6 +14,7 @@ export const NewExpense: React.FC = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { categories, recordExpense, createCategory } = useExpenses();
+  const { logAction } = useAuditLog();
 
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
@@ -61,6 +63,11 @@ export const NewExpense: React.FC = () => {
         receiptFile,
       );
       if (exp) {
+        logAction({
+          action: 'record_expense',
+          entity: 'expense',
+          metadata: { category: categoryId },
+        });
         setToast({ message: 'Expense recorded successfully!', type: 'success' });
         setTimeout(() => navigate('/expenses'), 1000);
       } else {

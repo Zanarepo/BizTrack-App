@@ -3,6 +3,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useInventory } from '../hooks/useInventory';
 import { useCart } from '../hooks/useCart';
 import { useBusiness } from '../hooks/useBusiness';
+import { useAuditLog } from '../hooks/useAuditLog';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { SearchInput } from '../components/SearchInput';
@@ -17,6 +18,7 @@ export const NewSale: React.FC = () => {
   const { cart, subtotal, addToCart, updateQuantity, removeFromCart, checkout } = useCart();
   const { getCurrencySymbol } = useBusiness();
   const currSymbol = getCurrencySymbol();
+  const { logAction } = useAuditLog();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSelectOpen, setIsSelectOpen] = useState(false);
@@ -70,6 +72,11 @@ export const NewSale: React.FC = () => {
     setIsProcessing(false);
 
     if (success) {
+      logAction({
+        action: 'record_sale',
+        entity: 'sale',
+        metadata: { method: confirmMethod },
+      });
       setToast({ message: t('checkoutSuccess'), type: 'success' });
     } else {
       setToast({ message: t('saleFailed'), type: 'error' });

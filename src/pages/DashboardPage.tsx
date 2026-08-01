@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useBusiness } from '../hooks/useBusiness';
+import { useAuditLog } from '../hooks/useAuditLog';
 import { useDashboard } from '../hooks/useDashboard';
 import { useRevenueTrend } from '../hooks/useRevenueTrend';
 import { useExpenseTrend } from '../hooks/useExpenseTrend';
@@ -98,6 +99,15 @@ export const DashboardPage: React.FC = () => {
   } = useRecentTransactions();
   const { metrics: businessHealthMetrics, isLoading: isHealthLoading } = useBusinessHealth();
   const [isSyncCenterOpen, setIsSyncCenterOpen] = useState(false);
+  const { logAction } = useAuditLog();
+  const hasLoggedOpen = useRef(false);
+
+  useEffect(() => {
+    if (!hasLoggedOpen.current && business) {
+      logAction({ action: 'app_open', entity: 'session' });
+      hasLoggedOpen.current = true;
+    }
+  }, [business, logAction]);
 
   const handleGlobalFilter = (opt: DashboardFilterOption) => {
     setRevenueDays(opt.days);

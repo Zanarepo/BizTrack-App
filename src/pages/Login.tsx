@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
 import { Button, Input, Toast } from '../components';
 import { Phone, Lock, ArrowRight, Mail, Eye, EyeOff } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export const Login: React.FC = () => {
   const { signIn } = useAuth();
@@ -22,7 +23,7 @@ export const Login: React.FC = () => {
     setErrorMessage(null);
     setIsLoading(true);
 
-    const { error } = await signIn(identifier, useMagicLink ? undefined : pinOrPassword);
+    const { error, user } = await signIn(identifier, useMagicLink ? undefined : pinOrPassword);
 
     setIsLoading(false);
     if (error) {
@@ -30,7 +31,18 @@ export const Login: React.FC = () => {
     } else if (useMagicLink) {
       setSuccessMessage('Magic login link sent! Please check your email inbox.');
     } else {
-      navigate('/dashboard');
+      if (user) {
+        const { data } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+        if (data && data.role === 'pending_admin') {
+          navigate('/pending-verification');
+        } else if (data && (data.role === 'admin' || data.role === 'superadmin')) {
+          navigate('/admin');
+        } else {
+          navigate('/dashboard');
+        }
+      } else {
+        navigate('/dashboard');
+      }
     }
   };
 

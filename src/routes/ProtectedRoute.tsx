@@ -14,7 +14,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requireBusiness = true }) => {
-  const { session, isLoading: authLoading } = useAuth();
+  const { session, profile, isLoading: authLoading } = useAuth();
   const { business, isLoading: businessLoading } = useBusiness();
 
   if (authLoading || (requireBusiness && businessLoading)) {
@@ -46,6 +46,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requireBusiness 
 
   // Enforce business registration before accessing main dashboard modules
   if (requireBusiness && !business) {
+    if (profile?.role === 'admin' || profile?.role === 'superadmin') {
+      return <Navigate to="/admin" replace />;
+    }
     return <Navigate to="/onboarding" replace />;
   }
 

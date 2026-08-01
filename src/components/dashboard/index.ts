@@ -9,3 +9,5 @@ export * from './RecentTransactionsWidget';
 export * from './QuickActionsWidget';
 export * from './DashboardFilterBar';
 export * from './BusinessHealthWidget';
+export * from './ActivityChart';
+export * from './BusinessComparisonChart';

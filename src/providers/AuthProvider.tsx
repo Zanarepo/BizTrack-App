@@ -93,14 +93,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signIn = async (identifier: string, passwordOrPin?: string) => {
     const formattedEmail = formatAuthIdentifier(identifier);
     if (passwordOrPin) {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formattedEmail,
         password: passwordOrPin,
       });
-      return { error: error as Error | null };
+      return { error: error as Error | null, user: data?.user };
     } else {
-      const { error } = await supabase.auth.signInWithOtp({ email: formattedEmail });
-      return { error: error as Error | null };
+      const { data, error } = await supabase.auth.signInWithOtp({ email: formattedEmail });
+      return { error: error as Error | null, user: data?.user };
     }
   };
 
@@ -112,6 +112,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       phone?: string;
       security_question?: string;
       security_answer?: string;
+      requested_role?: string;
     },
   ) => {
     const formattedEmail = formatAuthIdentifier(identifier);

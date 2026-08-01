@@ -6,6 +6,7 @@ import { CategoryDropdown } from './CategoryDropdown';
 import { useInventory } from '../hooks/useInventory';
 import type { ProductWithStock } from '../types/inventory';
 import { useBusiness } from '../hooks/useBusiness';
+import { useAuditLog } from '../hooks/useAuditLog';
 import { useLanguage } from '../hooks/useLanguage';
 import { Box, DollarSign, Hash, Layers, Zap } from 'lucide-react';
 
@@ -26,6 +27,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 }) => {
   const { createProduct, updateProduct, products } = useInventory();
   const { business, getCurrencySymbol } = useBusiness();
+  const { logAction } = useAuditLog();
   const { t } = useLanguage();
   const currSymbol = getCurrencySymbol();
 
@@ -145,6 +147,12 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
     setIsSubmitting(false);
     if (result) {
+      logAction({
+        action: isEditing ? 'update_product' : 'create_product',
+        entity: 'product',
+        entityId: isEditing ? productToEdit?.id : undefined,
+        metadata: { product_name: productName.trim() },
+      });
       if (onSuccess) onSuccess(isEditing ? 'Item updated successfully' : 'Item added successfully');
       onClose();
     } else {

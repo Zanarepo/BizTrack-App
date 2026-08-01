@@ -23,6 +23,7 @@ import {
   Coins,
   FileText,
   Download,
+  ShieldAlert,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -219,6 +220,45 @@ export const AppLayout: React.FC = () => {
             <SettingsIcon size={19} />
             <span>App Settings</span>
           </Link>
+
+          {(profile?.role === 'admin' || profile?.role === 'superadmin') && (
+            <>
+              <div style={{ marginTop: '16px', marginBottom: '8px', padding: '0 16px' }}>
+                <span
+                  style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    color: 'var(--brand-primary)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  Admin
+                </span>
+              </div>
+              <Link
+                to="/admin"
+                onClick={() => setIsSidebarOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  textDecoration: 'none',
+                  color: 'var(--brand-primary)',
+                  backgroundColor: 'var(--surface-color)',
+                  border: '1px solid var(--border-color)',
+                  fontWeight: 600,
+                  marginBottom: '8px',
+                  transition: 'all var(--transition-fast)',
+                }}
+              >
+                <ShieldAlert size={19} />
+                <span>Admin Portal</span>
+              </Link>
+            </>
+          )}
         </nav>
 
         <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
