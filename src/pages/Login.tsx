@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
 import { Button, Input, Toast } from '../components';
-import { Phone, Lock, ArrowRight, Mail } from 'lucide-react';
+import { Phone, Lock, ArrowRight, Mail, Eye, EyeOff } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { signIn } = useAuth();
@@ -13,6 +13,7 @@ export const Login: React.FC = () => {
   const [pinOrPassword, setPinOrPassword] = useState('');
   const [useMagicLink, setUseMagicLink] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -77,12 +78,30 @@ export const Login: React.FC = () => {
           <div className="col-span-1">
             <Input
               label={t('pinLabel')}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder={t('pinPlaceholder')}
               value={pinOrPassword}
               onChange={(e) => setPinOrPassword(e.target.value)}
               required
               leftIcon={<Lock size={17} />}
+              rightIcon={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'inherit',
+                    padding: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              }
             />
           </div>
         )}

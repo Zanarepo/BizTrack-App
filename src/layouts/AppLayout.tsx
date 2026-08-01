@@ -3,7 +3,8 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguage } from '../hooks/useLanguage';
-import { LanguageSelector } from '../components';
+import { LanguageSelector, InstallGuideModal } from '../components';
+import { usePwaInstall } from '../hooks/usePwaInstall';
 import {
   Menu,
   X,
@@ -17,6 +18,11 @@ import {
   TrendingUp,
   Package,
   History,
+  ShoppingCart,
+  Receipt,
+  Coins,
+  FileText,
+  Download,
 } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
@@ -24,7 +30,10 @@ export const AppLayout: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useLanguage();
   const location = useLocation();
+  const { showInstallButton, installApp } = usePwaInstall();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDesktopOpen, setIsDesktopOpen] = useState(true);
+  const [isInstallGuideOpen, setIsInstallGuideOpen] = useState(false);
 
   // Close mobile sidebar asynchronously upon route change without triggering React 19 synchronous cascading renders
   useEffect(() => {
@@ -84,7 +93,9 @@ export const AppLayout: React.FC = () => {
       />
 
       {/* Sidebar Navigation Drawer */}
-      <aside className={`desktop-sidebar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+      <aside
+        className={`desktop-sidebar ${isSidebarOpen ? 'sidebar-open' : ''} ${!isDesktopOpen ? 'desktop-closed' : ''}`}
+      >
         <div
           style={{
             display: 'flex',
@@ -95,7 +106,7 @@ export const AppLayout: React.FC = () => {
           }}
         >
           <Link
-            to="/dashboard"
+            to="/"
             onClick={() => setIsSidebarOpen(false)}
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
           >
@@ -131,7 +142,7 @@ export const AppLayout: React.FC = () => {
           </button>
         </div>
 
-        <nav style={{ flex: 1 }}>
+        <nav style={{ flex: 1, overflowY: 'auto', paddingRight: '4px', margin: '8px 0' }}>
           <Link
             to="/dashboard"
             onClick={() => setIsSidebarOpen(false)}
@@ -141,12 +152,48 @@ export const AppLayout: React.FC = () => {
             <span>Dashboard</span>
           </Link>
           <Link
+            to="/financials"
+            onClick={() => setIsSidebarOpen(false)}
+            style={navItemStyle('/financials')}
+          >
+            <TrendingUp size={19} />
+            <span>{t('tabFinancials')}</span>
+          </Link>
+          <Link
+            to="/reports"
+            onClick={() => setIsSidebarOpen(false)}
+            style={navItemStyle('/reports')}
+          >
+            <FileText size={19} />
+            <span>{t('tabReports')}</span>
+          </Link>
+          <Link to="/sales" onClick={() => setIsSidebarOpen(false)} style={navItemStyle('/sales')}>
+            <ShoppingCart size={19} />
+            <span>{t('tabSales')}</span>
+          </Link>
+          <Link
+            to="/sales-history"
+            onClick={() => setIsSidebarOpen(false)}
+            style={navItemStyle('/sales-history')}
+          >
+            <Receipt size={19} />
+            <span>Sales History</span>
+          </Link>
+          <Link
+            to="/expenses"
+            onClick={() => setIsSidebarOpen(false)}
+            style={navItemStyle('/expenses')}
+          >
+            <Coins size={19} />
+            <span>{t('tabExpenses')}</span>
+          </Link>
+          <Link
             to="/inventory"
             onClick={() => setIsSidebarOpen(false)}
             style={navItemStyle('/inventory')}
           >
             <Package size={19} />
-            <span>Inventory Catalog</span>
+            <span>Shop Items</span>
           </Link>
           <Link
             to="/inventory-ledger"
@@ -154,7 +201,7 @@ export const AppLayout: React.FC = () => {
             style={navItemStyle('/inventory-ledger')}
           >
             <History size={19} />
-            <span>Stock Ledger</span>
+            <span>Stock History</span>
           </Link>
           <Link
             to="/profile"
@@ -162,7 +209,7 @@ export const AppLayout: React.FC = () => {
             style={navItemStyle('/profile')}
           >
             <UserCheck size={19} />
-            <span>Owner Profile</span>
+            <span>My Profile</span>
           </Link>
           <Link
             to="/settings"
@@ -232,14 +279,37 @@ export const AppLayout: React.FC = () => {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         <header className="workspace-header">
           <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            aria-label="Toggle mobile navigation menu"
-            className="mobile-menu-btn"
+            onClick={() => {
+              if (window.innerWidth >= 900) {
+                setIsDesktopOpen(!isDesktopOpen);
+              } else {
+                setIsSidebarOpen(!isSidebarOpen);
+              }
+            }}
+            aria-label="Toggle navigation menu"
+            className="sidebar-toggle-btn"
+            title={isDesktopOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
             {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+            {showInstallButton && (
+              <button
+                onClick={async () => {
+                  const success = await installApp();
+                  if (!success) {
+                    setIsInstallGuideOpen(true);
+                  }
+                }}
+                className="btn btn-primary btn-sm"
+                style={{ padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                aria-label="Install App"
+              >
+                <Download size={15} />
+                <span style={{ fontWeight: 700 }}>Install App</span>
+              </button>
+            )}
             <LanguageSelector />
             <button
               onClick={toggleTheme}
@@ -279,6 +349,8 @@ export const AppLayout: React.FC = () => {
           BizTrack © 2026 — Simple Financial Record Keeping for African Enterprises.
         </footer>
       </div>
+
+      <InstallGuideModal isOpen={isInstallGuideOpen} onClose={() => setIsInstallGuideOpen(false)} />
     </div>
   );
 };

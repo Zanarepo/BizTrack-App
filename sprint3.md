@@ -481,3 +481,4 @@ Should cashiers be able to save an unfinished sale as a draft, or should draft s
 Should we generate receipts as HTML only in the MVP, or also provide downloadable PDF formatting with branded templates?
 With Sprint 3 complete, BizTrack Lite can now capture the two core operational activities of a retail business: inventory and sales. Sprint 4 will introduce Expense Management, completing the financial transaction layer needed for accurate net profit calculations and comprehensive financial reporting.
 
+make itvery mobiel 1st experince, include lanaguage tramslation for all the modules, make sure the ui is very smooth and fast and mobile optimized, i should be able to do all the operations in mobile smooth and fast, the design should be premium and user-friendly. all th cRUD must accompany its notifcation pop ups 

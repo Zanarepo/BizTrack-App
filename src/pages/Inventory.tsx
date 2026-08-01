@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useInventory } from '../hooks/useInventory';
 import { useBusiness } from '../hooks/useBusiness';
 import { useLanguage } from '../hooks/useLanguage';
@@ -14,7 +14,7 @@ import {
   Toast,
 } from '../components';
 import type { ProductWithStock } from '../types/inventory';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Plus,
   Package,
@@ -32,16 +32,33 @@ export const Inventory: React.FC = () => {
   const { t } = useLanguage();
   const currSymbol = getCurrencySymbol();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialAction = searchParams.get('action');
+  const initialStatus = searchParams.get('status');
+  const initialSearch = searchParams.get('search') || searchParams.get('q') || '';
+
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [showLowStockOnly, setShowLowStockOnly] = useState<boolean>(false);
+  const [showLowStockOnly, setShowLowStockOnly] = useState<boolean>(
+    initialStatus === 'low_stock' || initialStatus === 'out_of_stock',
+  );
 
   const [productToAdjust, setProductToAdjust] = useState<ProductWithStock | null>(null);
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
 
   const [productToEdit, setProductToEdit] = useState<ProductWithStock | null>(null);
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(
+    initialAction === 'new' || initialAction === 'add',
+  );
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (searchParams.has('action')) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('action');
+      setSearchParams(newParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {

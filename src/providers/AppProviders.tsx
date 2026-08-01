@@ -6,6 +6,9 @@ import { NetworkProvider } from './NetworkProvider';
 import { LanguageProvider } from './LanguageProvider';
 import { BusinessProvider } from './BusinessProvider';
 import { InventoryProvider } from './InventoryProvider';
+import { CartProvider } from './CartProvider';
+import { ExpenseProvider } from './ExpenseProvider';
+import { FinancialProvider } from './FinancialProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +31,13 @@ export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
           <AuthProvider>
             <NetworkProvider>
               <BusinessProvider>
-                <InventoryProvider>{children}</InventoryProvider>
+                <InventoryProvider>
+                  <CartProvider>
+                    <ExpenseProvider>
+                      <FinancialProvider>{children}</FinancialProvider>
+                    </ExpenseProvider>
+                  </CartProvider>
+                </InventoryProvider>
               </BusinessProvider>
             </NetworkProvider>
           </AuthProvider>

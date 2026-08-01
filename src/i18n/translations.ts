@@ -122,7 +122,121 @@ export type TranslationKey =
   | 'colType'
   | 'colQtyChange'
   | 'colNewBalance'
-  | 'colRemarks';
+  | 'colRemarks'
+  | 'tabSales'
+  | 'cartTitle'
+  | 'cartEmpty'
+  | 'cartTotal'
+  | 'btnCheckout'
+  | 'payMethodCash'
+  | 'payMethodPOS'
+  | 'payMethodTransfer'
+  | 'payMethodMobile'
+  | 'checkoutSuccess'
+  | 'saleFailed'
+  | 'receiptTitle'
+  | 'printReceipt'
+  | 'salesHistoryTitle'
+  | 'salesHistorySubtitle'
+  | 'colReceiptNo'
+  | 'colTotalAmount'
+  | 'tabExpenses'
+  | 'expensesTitle'
+  | 'expensesSubtitle'
+  | 'btnRecordExpense'
+  | 'todayExpenses'
+  | 'weeklyExpenses'
+  | 'monthlyExpenses'
+  | 'largestCategory'
+  | 'modalTitleAddExpense'
+  | 'modalTitleEditExpense'
+  | 'fieldExpenseAmount'
+  | 'fieldExpenseDate'
+  | 'fieldExpenseDesc'
+  | 'fieldExpensePayMethod'
+  | 'fieldReceiptUpload'
+  | 'btnSaveExpense'
+  | 'confirmDeleteExpense'
+  | 'deleteExpenseSuccess'
+  | 'deleteExpenseFailed'
+  | 'expenseDateFutureError'
+  | 'tabFinancials'
+  | 'financialsTitle'
+  | 'financialsSubtitle'
+  | 'revenueLabel'
+  | 'cogsLabel'
+  | 'grossProfitLabel'
+  | 'netProfitLabel'
+  | 'cashPositionLabel'
+  | 'inventoryValueLabel'
+  | 'healthScoreLabel'
+  | 'healthRatingLabel'
+  | 'periodSelectorLabel'
+  | 'startDateLabel'
+  | 'endDateLabel'
+  | 'dashTabOverview'
+  | 'dashTabCharts'
+  | 'dashTabStock'
+  | 'dashTabHealth'
+  | 'dashQuickActionsTitle'
+  | 'dashRecordSale'
+  | 'dashRecordSaleSub'
+  | 'dashLogExpense'
+  | 'dashLogExpenseSub'
+  | 'dashAddProduct'
+  | 'dashAddProductSub'
+  | 'dashCheckStock'
+  | 'dashCheckStockSub'
+  | 'dashTodaySales'
+  | 'dashTodayExpenses'
+  | 'dashActualProfit'
+  | 'dashAvailableCash'
+  | 'dashStockValue'
+  | 'dashItemsInShop'
+  | 'dashBestsellersTitle'
+  | 'dashLowStockTitle'
+  | 'dashActivitiesTitle'
+  | 'dashHealthTitle'
+  | 'tabReports'
+  | 'reportsTitle'
+  | 'reportsSubtitle'
+  | 'repTabSales'
+  | 'repTabExpenses'
+  | 'repTabStock'
+  | 'repTabProfit'
+  | 'repTabBank'
+  | 'repTabHistory'
+  | 'btnExportPDF'
+  | 'btnExportExcel'
+  | 'btnExportCSV'
+  | 'btnPrintReport'
+  | 'mockupSalesHeader'
+  | 'mockupSalesItemLabel'
+  | 'mockupSalesItemValue'
+  | 'mockupSalesAmountLabel'
+  | 'mockupSalesAmountValue'
+  | 'mockupSalesSaveBtn'
+  | 'mockupInvHeader'
+  | 'mockupInvItem1'
+  | 'mockupInvRestock'
+  | 'mockupInvInStock'
+  | 'mockupInvItem2'
+  | 'mockupInvLowStock'
+  | 'mockupInvRemaining'
+  | 'mockupProfitHeader'
+  | 'mockupProfitNetTitle'
+  | 'mockupProfitNetValue'
+  | 'mockupProfitNetTrend'
+  | 'mockupProfitSales'
+  | 'mockupProfitSalesValue'
+  | 'mockupProfitExpenses'
+  | 'mockupProfitExpensesValue'
+  | 'showcaseSalesTitle'
+  | 'showcaseSalesDesc'
+  | 'showcaseOfflineTitle'
+  | 'showcaseOfflineDesc'
+  | 'showcaseSmartTitle'
+  | 'showcaseSmartDesc';
 
 type TranslationDictionary = Record<LanguageCode, Record<TranslationKey, string>>;
 
@@ -138,15 +252,15 @@ export const TRANSLATIONS: TranslationDictionary = {
     footerDesc: 'Empowering everyday African entrepreneurs with intuitive digital bookkeeping.',
     signInTitle: 'Sign In to Your Business',
     signInSubtitle:
-      'Enter your registered Mobile Phone Number (or Email) and your 4-Digit PIN / Password.',
+      'Enter your registered Mobile Phone Number (or Email) and your 6-Digit PIN / Password.',
     registerTitle: 'Register Your Business',
     registerSubtitle:
-      'No email or accounting skills required! Create an account using your mobile phone number and a simple 4-Digit PIN.',
+      'No email or accounting skills required! Create an account using your mobile phone number and a simple 6-Digit PIN.',
     phoneLabel: 'Mobile Phone Number (or Email Address)',
     phonePlaceholder: 'e.g., 08012345678',
     phoneHelper: 'Local traders can use their phone number. Supermarkets can use email.',
-    pinLabel: '4-Digit PIN or Password',
-    pinPlaceholder: 'e.g., 1234 (just like your POS PIN)',
+    pinLabel: '6-Digit PIN or Password',
+    pinPlaceholder: 'e.g., 123456 (just like your POS PIN)',
     ownerNameLabel: 'Owner Full Name',
     ownerNamePlaceholder: 'e.g., Mama Ngozi',
     forgotPin: 'Forgot PIN / Password?',
@@ -240,6 +354,125 @@ export const TRANSLATIONS: TranslationDictionary = {
     colQtyChange: 'QUANTITY CHANGED',
     colNewBalance: 'NEW REMAINING STOCK',
     colRemarks: 'REASON / NOTES',
+    tabSales: 'Record Sales',
+    cartTitle: 'Current Sale (Cart)',
+    cartEmpty: 'Cart is empty. Search items to add.',
+    cartTotal: 'Total Amount to Pay',
+    btnCheckout: 'Complete Sale',
+    payMethodCash: 'Cash',
+    payMethodPOS: 'POS / Card',
+    payMethodTransfer: 'Bank Transfer',
+    payMethodMobile: 'Mobile Money',
+    checkoutSuccess: 'Sale completed successfully!',
+    saleFailed: 'Failed to process sale. Try again.',
+    receiptTitle: 'Sales Receipt',
+    printReceipt: 'Print Receipt',
+    salesHistoryTitle: 'Sales Ledger & Receipts',
+    salesHistorySubtitle: 'View past sales, daily revenue, and print receipts.',
+    colReceiptNo: 'RECEIPT NO.',
+    colTotalAmount: 'TOTAL AMOUNT',
+    tabExpenses: 'Shop Expenses',
+    expensesTitle: 'Business Expenses',
+    expensesSubtitle: 'Record and track where your money goes to prevent leakage.',
+    btnRecordExpense: 'Record Expense',
+    todayExpenses: "Today's Expenses",
+    weeklyExpenses: 'Weekly Expenses',
+    monthlyExpenses: 'Monthly Expenses',
+    largestCategory: 'Top Expense Category',
+    modalTitleAddExpense: 'Record New Expense',
+    modalTitleEditExpense: 'Edit Expense Record',
+    fieldExpenseAmount: 'Expense Amount',
+    fieldExpenseDate: 'Expense Date',
+    fieldExpenseDesc: 'Expense Description',
+    fieldExpensePayMethod: 'Payment Method',
+    fieldReceiptUpload: 'Attach Receipt (Optional)',
+    btnSaveExpense: 'Save Expense',
+    confirmDeleteExpense: 'Are you sure you want to delete this expense?',
+    deleteExpenseSuccess: 'Expense deleted successfully',
+    deleteExpenseFailed: 'Failed to delete expense',
+    expenseDateFutureError: 'Future dates are not allowed for expenses.',
+    tabFinancials: 'Money & Profits',
+    financialsTitle: 'Financial Insights',
+    financialsSubtitle: 'Automatically track revenue, COGS, profits, and overall business health.',
+    revenueLabel: 'Revenue',
+    cogsLabel: 'Cost of Goods Sold (COGS)',
+    grossProfitLabel: 'Gross Profit',
+    netProfitLabel: 'Net Profit',
+    cashPositionLabel: 'Cash Position',
+    inventoryValueLabel: 'Inventory Value',
+    healthScoreLabel: 'Business Health Score',
+    healthRatingLabel: 'Health Rating',
+    periodSelectorLabel: 'Reporting Period',
+    startDateLabel: 'From',
+    endDateLabel: 'To',
+    dashTabOverview: 'Overview',
+    dashTabCharts: 'Charts',
+    dashTabStock: 'Stock',
+    dashTabHealth: 'Health Check',
+    dashQuickActionsTitle: 'Quick Action Shortcuts',
+    dashRecordSale: 'Record Customer Payment',
+    dashRecordSaleSub: 'Log cash or transfers immediately',
+    dashLogExpense: 'Log Business Expense',
+    dashLogExpenseSub: 'Track shop bills and purchases',
+    dashAddProduct: 'Add New Shop Item',
+    dashAddProductSub: 'Register a new item for sale',
+    dashCheckStock: 'Check All Stock Items',
+    dashCheckStockSub: 'View quantities and adjust stock',
+    dashTodaySales: "Today's Sales",
+    dashTodayExpenses: "Today's Expenses",
+    dashActualProfit: 'Actual Profit',
+    dashAvailableCash: 'Available Cash',
+    dashStockValue: 'Shop Stock Value',
+    dashItemsInShop: 'Items In Shop',
+    dashBestsellersTitle: 'Top Selling Shop Items',
+    dashLowStockTitle: 'Low Stock Warnings',
+    dashActivitiesTitle: 'Recent Shop Operations & Transactions',
+    dashHealthTitle: 'Business Health Scorecard',
+    tabReports: 'Business Reports',
+    reportsTitle: 'Reports & Data Exports',
+    reportsSubtitle:
+      'Generate clean summaries of your shop performance, print, or save files offline.',
+    repTabSales: 'Sales & Money In',
+    repTabExpenses: 'Shop Expenses',
+    repTabStock: 'Shop Stock & Value',
+    repTabProfit: 'Take-Home Profit',
+    repTabBank: 'Bank & Loan Summary',
+    repTabHistory: 'Saved Reports',
+    btnExportPDF: 'Save as PDF',
+    btnExportExcel: 'Save as Excel',
+    btnExportCSV: 'Save as CSV',
+    btnPrintReport: 'Print Report',
+
+    mockupSalesHeader: 'Record New Sale (Pidgin)',
+    mockupSalesItemLabel: 'Wetin you sell? (Item Name)',
+    mockupSalesItemValue: '2 Bags of Rice',
+    mockupSalesAmountLabel: 'How much you collect? (₦)',
+    mockupSalesAmountValue: '₦ 84,000',
+    mockupSalesSaveBtn: 'Save Record',
+    mockupInvHeader: 'Smart Inventory',
+    mockupInvItem1: 'Indomie Carton',
+    mockupInvRestock: 'Last restocked: Today',
+    mockupInvInStock: 'In Stock',
+    mockupInvItem2: 'Peak Milk (Tin)',
+    mockupInvLowStock: 'Low Stock Warning',
+    mockupInvRemaining: 'Remaining',
+    mockupProfitHeader: 'Profit & Loss Engine',
+    mockupProfitNetTitle: 'Net Profit (This Week)',
+    mockupProfitNetValue: '₦ 142,500',
+    mockupProfitNetTrend: '+15.2% vs Last Week',
+    mockupProfitSales: 'Total Sales',
+    mockupProfitSalesValue: '₦ 380,000',
+    mockupProfitExpenses: 'Total Expenses',
+    mockupProfitExpensesValue: '₦ 237,500',
+    showcaseSalesTitle: 'Record Sales in Seconds',
+    showcaseSalesDesc:
+      'No complicated accounting jargon. Our Pidgin English interface makes it incredibly easy for any shop owner or attendant to log daily sales instantly, saving you hours of manual bookkeeping.',
+    showcaseOfflineTitle: '100% Offline Capable',
+    showcaseOfflineDesc:
+      'Bad network? No problem. Track your inventory and receive low stock alerts entirely offline. BizTrack uses advanced local databases to save your data instantly, syncing securely to the cloud only when your connection returns.',
+    showcaseSmartTitle: 'Make Smart Decisions',
+    showcaseSmartDesc:
+      'Stop guessing if you are making money. Our automated Profit & Loss engine calculates your true net profit in real-time, helping you identify trends and grow your business with bank-grade security.',
   },
   pid: {
     appTitle: 'BizTrack',
@@ -251,15 +484,15 @@ export const TRANSLATIONS: TranslationDictionary = {
     existingAccount: 'Enter Your Account',
     footerDesc: 'Supporting African business hustlers with easy simple record keeping.',
     signInTitle: 'Enter Your Business Records',
-    signInSubtitle: 'Put your Phone Number (or Email) with your 4-Digit Secret PIN / Password.',
+    signInSubtitle: 'Put your Phone Number (or Email) with your 6-Digit Secret PIN / Password.',
     registerTitle: 'Open Your Business Account Here',
     registerSubtitle:
-      'No need for email or book-keeping school! Open your account with just your phone number and 4-Digit PIN.',
+      'No need for email or book-keeping school! Open your account with just your phone number and 6-Digit PIN.',
     phoneLabel: 'Your Phone Number (or Email)',
     phonePlaceholder: 'e.g., 08012345678',
     phoneHelper: 'Traders fit put their phone number. Supermarkets fit use email.',
-    pinLabel: 'Your Secret 4-Digit PIN',
-    pinPlaceholder: 'e.g., 1234 (same like your POS PIN)',
+    pinLabel: 'Your Secret 6-Digit PIN',
+    pinPlaceholder: 'e.g., 123456 (same like your POS PIN)',
     ownerNameLabel: 'Your Full Name',
     ownerNamePlaceholder: 'e.g., Mama Ngozi',
     forgotPin: 'You don forget PIN / Password?',
@@ -353,6 +586,125 @@ export const TRANSLATIONS: TranslationDictionary = {
     colQtyChange: 'HOW MANY CHANGE',
     colNewBalance: 'NEW REMAINING STOCK',
     colRemarks: 'REASON / NOTES',
+    tabSales: 'Sell Market',
+    cartTitle: 'Customer Cart',
+    cartEmpty: 'Cart dey empty. Find item add put.',
+    cartTotal: 'Total Money to Pay',
+    btnCheckout: 'Collect Money',
+    payMethodCash: 'Cash',
+    payMethodPOS: 'POS',
+    payMethodTransfer: 'Transfer',
+    payMethodMobile: 'Momo/Opay',
+    checkoutSuccess: 'Market done sell wella!',
+    saleFailed: 'Sale no gree go. Try am again.',
+    receiptTitle: 'Customer Receipt',
+    printReceipt: 'Print Receipt',
+    salesHistoryTitle: 'Sales Record & Receipts',
+    salesHistorySubtitle: 'See all the market you don sell and the money you make.',
+    colReceiptNo: 'RECEIPT NO.',
+    colTotalAmount: 'TOTAL MONEY',
+    tabExpenses: 'Shop Expenses',
+    expensesTitle: 'Hustle Expenses',
+    expensesSubtitle: 'Record where your money dey go make you for no lose profit.',
+    btnRecordExpense: 'Add New Expense',
+    todayExpenses: 'Money Spent Today',
+    weeklyExpenses: 'Money Spent This Week',
+    monthlyExpenses: 'Money Spent This Month',
+    largestCategory: 'Highest Expense Category',
+    modalTitleAddExpense: 'Record New Expense',
+    modalTitleEditExpense: 'Edit Expense details',
+    fieldExpenseAmount: 'How much you spent',
+    fieldExpenseDate: 'Date you spent am',
+    fieldExpenseDesc: 'Wetin you buy / use am for',
+    fieldExpensePayMethod: 'How you pay',
+    fieldReceiptUpload: 'Attach Receipt (If e dey) (Optional)',
+    btnSaveExpense: 'Save Expense',
+    confirmDeleteExpense: 'You sure say you want delete this expense?',
+    deleteExpenseSuccess: 'Expense don delete well!',
+    deleteExpenseFailed: 'Error: Expense no delete, try again.',
+    expenseDateFutureError: 'You no fit put date where never reach for future.',
+    tabFinancials: 'Money & Profits',
+    financialsTitle: 'How Money Dey Flow',
+    financialsSubtitle: 'See your complete revenue, market costs, profit, and health rating.',
+    revenueLabel: 'Total Money In',
+    cogsLabel: 'Market Purchase Costs',
+    grossProfitLabel: 'Gross Profit',
+    netProfitLabel: 'Pure Clean Profit',
+    cashPositionLabel: 'Cash in Hand',
+    inventoryValueLabel: 'Stock Value',
+    healthScoreLabel: 'Business Health Score',
+    healthRatingLabel: 'Business Health Status',
+    periodSelectorLabel: 'Time Frame',
+    startDateLabel: 'From',
+    endDateLabel: 'Reach',
+    dashTabOverview: 'How Business De Go',
+    dashTabCharts: 'Money Charts',
+    dashTabStock: 'Shop Stock',
+    dashTabHealth: 'Business Strength',
+    dashQuickActionsTitle: 'Fast Action Shortcuts',
+    dashRecordSale: 'Record Money Wey Customer Pay',
+    dashRecordSaleSub: 'Enter cash or bank transfer money right now',
+    dashLogExpense: 'Log Money Wey Go Out',
+    dashLogExpenseSub: 'Enter generator fuel, transport & shop bills',
+    dashAddProduct: 'Add New Item For Shop',
+    dashAddProductSub: 'Put new market item make customers buy am',
+    dashCheckStock: 'Check All Items For Shop',
+    dashCheckStockSub: 'Check wetin remain for shelf & count market',
+    dashTodaySales: 'Today Market Money',
+    dashTodayExpenses: 'Money Wey We Spend Today',
+    dashActualProfit: 'Real Gain Wey We Make',
+    dashAvailableCash: 'Cash Wey De Hand Now',
+    dashStockValue: 'Total Money For Our Stock',
+    dashItemsInShop: 'Total Items For Shop',
+    dashBestsellersTitle: 'Items Wey People Buy Pass',
+    dashLowStockTitle: 'Items Wey Want Finish',
+    dashActivitiesTitle: 'Recent Things Wey Happen For Shop',
+    dashHealthTitle: 'How Business Strong Reach',
+    tabReports: 'Business Reports',
+    reportsTitle: 'All Your Market Reports',
+    reportsSubtitle:
+      'See how market dey yield, print customer statement, or download files offline.',
+    repTabSales: 'Money Wey Enter',
+    repTabExpenses: 'Money We Spend',
+    repTabStock: 'Shop Goods & Stock',
+    repTabProfit: 'Pure Clean Gain',
+    repTabBank: 'Bank & Loan Document',
+    repTabHistory: 'Saved Reports History',
+    btnExportPDF: 'Download PDF File',
+    btnExportExcel: 'Download Excel Sheet',
+    btnExportCSV: 'Download CSV File',
+    btnPrintReport: 'Print This Report',
+
+    mockupSalesHeader: 'Record New Sale (Pidgin)',
+    mockupSalesItemLabel: 'Wetin you sell? (Item Name)',
+    mockupSalesItemValue: '2 Bags of Rice',
+    mockupSalesAmountLabel: 'How much you collect? (₦)',
+    mockupSalesAmountValue: '₦ 84,000',
+    mockupSalesSaveBtn: 'Save Record',
+    mockupInvHeader: 'Smart Inventory',
+    mockupInvItem1: 'Indomie Carton',
+    mockupInvRestock: 'Last restocked: Today',
+    mockupInvInStock: 'In Stock',
+    mockupInvItem2: 'Peak Milk (Tin)',
+    mockupInvLowStock: 'Low Stock Warning',
+    mockupInvRemaining: 'Remaining',
+    mockupProfitHeader: 'Profit & Loss Engine',
+    mockupProfitNetTitle: 'Net Profit (This Week)',
+    mockupProfitNetValue: '₦ 142,500',
+    mockupProfitNetTrend: '+15.2% vs Last Week',
+    mockupProfitSales: 'Total Sales',
+    mockupProfitSalesValue: '₦ 380,000',
+    mockupProfitExpenses: 'Total Expenses',
+    mockupProfitExpensesValue: '₦ 237,500',
+    showcaseSalesTitle: 'Record Sales Sharp Sharp',
+    showcaseSalesDesc:
+      'No long grammar or big accounting words. Our Pidgin English design make am very easy for any shop owner or boy to write daily sales sharp sharp. E save you time wey you for use dey write inside big book.',
+    showcaseOfflineTitle: 'E Dey Work Offline 100%',
+    showcaseOfflineDesc:
+      'Network bad? No wahala. You fit track your goods and see low stock warning even if network no dey. BizTrack use local database to save your data sharp sharp, and e go backup go cloud securely when your network come back.',
+    showcaseSmartTitle: 'Make Better Business Decision',
+    showcaseSmartDesc:
+      'Make you stop to dey guess if your business dey make gain. Our Profit & Loss engine go calculate your actual net profit in real-time, help you see where money dey go and grow your business with bank-level security.',
   },
   ha: {
     appTitle: 'BizTrack',
@@ -364,15 +716,15 @@ export const TRANSLATIONS: TranslationDictionary = {
     existingAccount: 'Bude Shafin Ka',
     footerDesc: "Taimakawa 'yan kasuwan Afirka na yau da kullum ta hanyar lissafi mai sauqi.",
     signInTitle: 'Shiga Cikin Kasuwancinka',
-    signInSubtitle: 'Sa lambar wayarka na kasuwanci (ko imel) da lambar sirri na 4-Digit PIN.',
+    signInSubtitle: 'Sa lambar wayarka na kasuwanci (ko imel) da lambar sirri na 6-Digit PIN.',
     registerTitle: 'Bude Asusu na Kasuwancinka',
     registerSubtitle:
-      'Ba sai kana da imel ko karatun ilimi ba! Bude asusu da lambar waya da lambar 4-Digit PIN ta sauki.',
+      'Ba sai kana da imel ko karatun ilimi ba! Bude asusu da lambar waya da lambar 6-Digit PIN ta sauki.',
     phoneLabel: 'Lambar Waya (ko Imel)',
     phonePlaceholder: 'e.g., 08012345678',
     phoneHelper: "'Yan kasuwa za su iya amfani da lambar waya. Kantuna na iya amfani da imel.",
-    pinLabel: 'Lambar Sirri (PIN 4-Digit ko Password)',
-    pinPlaceholder: 'e.g., 1234 (kamata kuke yi na POS)',
+    pinLabel: 'Lambar Sirri (PIN 6-Digit ko Password)',
+    pinPlaceholder: 'e.g., 123456 (kamata kuke yi na POS)',
     ownerNameLabel: 'Cikakken Sunanka na Kasuwa',
     ownerNamePlaceholder: 'e.g., Mama Ngozi ko Alhaji Musa',
     forgotPin: 'Ka manta PIN / Bakin Zaren Sirri?',
@@ -466,6 +818,125 @@ export const TRANSLATIONS: TranslationDictionary = {
     colQtyChange: 'YAWAN ADADI WAN DA YA SAUYA',
     colNewBalance: 'SABON SAURAN KAYA',
     colRemarks: 'DALILI / BAYANIN SAUYI',
+    tabSales: 'Siyarwa',
+    cartTitle: 'Kayan Da Aka Zaba',
+    cartEmpty: 'Babu kaya. Nemo kaya ka saka.',
+    cartTotal: 'Jimillar Kudi',
+    btnCheckout: 'Kammala Siyarwa',
+    payMethodCash: 'Tsabar Kudi (Cash)',
+    payMethodPOS: 'POS / Katin ATM',
+    payMethodTransfer: 'Tura Kudi (Transfer)',
+    payMethodMobile: 'Kudin Waya (Mobile)',
+    checkoutSuccess: 'An siyar da kaya cikin nasara!',
+    saleFailed: 'An samu matsala wajen siyarwa. Sake gwadawa.',
+    receiptTitle: 'Rasidin Siyarwa',
+    printReceipt: 'Buga Rasidi',
+    salesHistoryTitle: 'Tarihin Siyarwa & Rasidi',
+    salesHistorySubtitle: 'Duba tallace-tallace da kudaden shiga na yau da kullun.',
+    colReceiptNo: 'LAMBAR RASIDI',
+    colTotalAmount: 'JIMILLAR KUDI',
+    tabExpenses: 'Kula da Kashe-kuɗe',
+    expensesTitle: 'Kashe-kuɗen Kasuwanci',
+    expensesSubtitle: 'Rubuta duk kuɗin da ke fita don kiyaye riba.',
+    btnRecordExpense: 'Rubuta Sabon Kashewa',
+    todayExpenses: 'Kuɗin da aka Kashe Yau',
+    weeklyExpenses: 'Kuɗin da aka Kashe Wannan Makon',
+    monthlyExpenses: 'Kuɗin da aka Kashe Wannan Watan',
+    largestCategory: 'Mafi Girma Category',
+    modalTitleAddExpense: 'Rubuta Sabon Kashewa',
+    modalTitleEditExpense: 'Gyara Bayanin Kashewa',
+    fieldExpenseAmount: 'Adadin Kuɗi',
+    fieldExpenseDate: 'Kwanan Wata',
+    fieldExpenseDesc: 'Bayanin Kashewa',
+    fieldExpensePayMethod: 'Hanyar Biya',
+    fieldReceiptUpload: 'Haɗa Hoton Rasiti (Na Zabi)',
+    btnSaveExpense: 'Ajiye Kashewa',
+    confirmDeleteExpense: 'Kun tabbata kuna son goge wannan kashewa?',
+    deleteExpenseSuccess: 'An goge bayanin kashewa cikin nasara!',
+    deleteExpenseFailed: 'Gaza goge kashewa, sake gwadawa.',
+    expenseDateFutureError: 'Ba a yarda da kwanan watan gaba ba don kashewa.',
+    tabFinancials: 'Kididdigar Kudi',
+    financialsTitle: 'Fahimtar Kudi',
+    financialsSubtitle: 'Lissafin kudin shiga, ribar kasuwanci, da yanayin lafiyar kasuwancinku.',
+    revenueLabel: 'Kudin Shiga (Revenue)',
+    cogsLabel: 'Kudin Kayan Da Aka Siyar (COGS)',
+    grossProfitLabel: 'Ribar Fari (Gross Profit)',
+    netProfitLabel: 'Riba Ta Gaskiya (Net Profit)',
+    cashPositionLabel: 'Kudi A Hannu (Cash)',
+    inventoryValueLabel: 'Darajar Kayan Kasuwanci',
+    healthScoreLabel: 'Makin Lafiyar Kasuwanci',
+    healthRatingLabel: 'Yanayin Lafiyar Kasuwanci',
+    periodSelectorLabel: 'Lokacin Rahoto',
+    startDateLabel: 'Daga',
+    endDateLabel: 'Zuwa',
+    dashTabOverview: 'Yanayin Kasuwa',
+    dashTabCharts: 'Jaddawalan Kuɗi',
+    dashTabStock: 'Kayan Shago',
+    dashTabHealth: 'Lafiyar Kasuwa',
+    dashQuickActionsTitle: 'Aiyera Sautin Shirina',
+    dashRecordSale: 'Rika Kudaden Ciniki',
+    dashRecordSaleSub: 'Asali na kudaden ko musayar su a saukake',
+    dashLogExpense: 'Rubuce Abun Asarari Ko Sawo',
+    dashLogExpenseSub: 'Lissafin kudin mai da sauran bukatun shago',
+    dashAddProduct: 'Saka Sabon Kaya A Shago',
+    dashAddProductSub: 'Shirya sabbin kayakin siyarwa luf-luf',
+    dashCheckStock: 'Duba Yawan Kayaki Gaba Duka',
+    dashCheckStockSub: 'Duba adadin kayakin da ke rumbunku',
+    dashTodaySales: 'Cinikin Yau',
+    dashTodayExpenses: 'Kudaden Aikin Shago Yau',
+    dashActualProfit: 'Riban Gaskiya Da Soke',
+    dashAvailableCash: 'Kudin Gaske Nayi Daga Hannu',
+    dashStockValue: 'Darajar Kayan Shagunmu',
+    dashItemsInShop: 'Yawan Kayan Muna Shagon',
+    dashBestsellersTitle: 'Kayakin Da Aka Fiye Siyarwa',
+    dashLowStockTitle: 'Ajocece Kaya Na Karewa',
+    dashActivitiesTitle: 'Aiyuka & Sauya Kasuwanci Kwanan Nan',
+    dashHealthTitle: 'Lafiyar Kasuwancinku Gaba Duka',
+    tabReports: 'Rahotan Kasuwanci',
+    reportsTitle: 'Bayanin Kudi da Kasuwanci',
+    reportsSubtitle:
+      'Duba yanayin kasuwanci, bugawar takarda da sauke bayanan shagona ba tare da intanet ba.',
+    repTabSales: 'Kudin Shigowa & Saye',
+    repTabExpenses: 'Kashe-Kashen Kudi',
+    repTabStock: 'Kaya & Ribar Jari',
+    repTabProfit: 'Asalilin Ribar Shago',
+    repTabBank: 'Takardar Ranci da Banki',
+    repTabHistory: 'Rahotannin Baya',
+    btnExportPDF: 'Sauke Takardar PDF',
+    btnExportExcel: 'Sauke Jadawarin Excel',
+    btnExportCSV: 'Sauke Fayil CSV',
+    btnPrintReport: 'Bugawa / Print',
+
+    mockupSalesHeader: 'Record New Sale (Pidgin)',
+    mockupSalesItemLabel: 'Wetin you sell? (Item Name)',
+    mockupSalesItemValue: '2 Bags of Rice',
+    mockupSalesAmountLabel: 'How much you collect? (₦)',
+    mockupSalesAmountValue: '₦ 84,000',
+    mockupSalesSaveBtn: 'Save Record',
+    mockupInvHeader: 'Smart Inventory',
+    mockupInvItem1: 'Indomie Carton',
+    mockupInvRestock: 'Last restocked: Today',
+    mockupInvInStock: 'In Stock',
+    mockupInvItem2: 'Peak Milk (Tin)',
+    mockupInvLowStock: 'Low Stock Warning',
+    mockupInvRemaining: 'Remaining',
+    mockupProfitHeader: 'Profit & Loss Engine',
+    mockupProfitNetTitle: 'Net Profit (This Week)',
+    mockupProfitNetValue: '₦ 142,500',
+    mockupProfitNetTrend: '+15.2% vs Last Week',
+    mockupProfitSales: 'Total Sales',
+    mockupProfitSalesValue: '₦ 380,000',
+    mockupProfitExpenses: 'Total Expenses',
+    mockupProfitExpensesValue: '₦ 237,500',
+    showcaseSalesTitle: 'Record Sales in Seconds',
+    showcaseSalesDesc:
+      'No complicated accounting jargon. Our Pidgin English interface makes it incredibly easy for any shop owner or attendant to log daily sales instantly, saving you hours of manual bookkeeping.',
+    showcaseOfflineTitle: '100% Offline Capable',
+    showcaseOfflineDesc:
+      'Bad network? No problem. Track your inventory and receive low stock alerts entirely offline. BizTrack uses advanced local databases to save your data instantly, syncing securely to the cloud only when your connection returns.',
+    showcaseSmartTitle: 'Make Smart Decisions',
+    showcaseSmartDesc:
+      'Stop guessing if you are making money. Our automated Profit & Loss engine calculates your true net profit in real-time, helping you identify trends and grow your business with bank-grade security.',
   },
   ig: {
     appTitle: 'BizTrack',
@@ -478,15 +949,15 @@ export const TRANSLATIONS: TranslationDictionary = {
     footerDesc: 'Na-akwalite ikike akpa ahịa ndị Afrịka gaa ozi dijital mfe dị ukwu.',
     signInTitle: 'Banye Na Ndekọ Ahịa Gị',
     signInSubtitle:
-      'Banye nọmba ekwentị gị gbatala kọgide ma ọ bụ email yana PIN Nọmba nzuzo 4-digit gị.',
+      'Banye nọmba ekwentị gị gbatala kọgide ma ọ bụ email yana PIN Nọmba nzuzo 6-digit gị.',
     registerTitle: 'Mee Akụrọnga Ahịa Gị ebe a',
     registerSubtitle:
-      'Enweghị mkpa email ma ọ bụ akparamaogugu nkwaru! Mee akpa ahịa ma tinye naanị Nọmba Ekwentị na Nọmba PIN gazi dị 4.',
+      'Enweghị mkpa email ma ọ bụ akparamaogugu nkwaru! Mee akpa ahịa ma tinye naanị Nọmba Ekwentị na Nọmba PIN gazi dị 6.',
     phoneLabel: 'Nọmba Ekwentị Gị (ma ọ bụ Email)',
     phonePlaceholder: 'e.g., 08012345678',
     phoneHelper: 'Ndị ahịa nweere onwe ha gazi nọmba ekwentị ekwe na ahịa niile.',
-    pinLabel: 'Nọmba nzuzo PIN gị nke 4-digit',
-    pinPlaceholder: 'e.g., 1234 (Dịka nọmba POS gị)',
+    pinLabel: 'Nọmba nzuzo PIN gị nke 6-digit',
+    pinPlaceholder: 'e.g., 123456 (Dịka nọmba POS gị)',
     ownerNameLabel: 'Aha Zuru Oke Nke Onye Ahịa',
     ownerNamePlaceholder: 'e.g., Mama Ngozi ma ọ bụ Chidubem',
     forgotPin: 'I chetụla nọmba nzuzo PIN gị?',
@@ -595,6 +1066,125 @@ export const TRANSLATIONS: TranslationDictionary = {
     colQtyChange: 'HE GBA RA ODO M',
     colNewBalance: 'HE I NWERE RE UG BU A',
     colRemarks: 'NKO E WE TU RE NTI OGE OBỌRI YE M',
+    tabSales: 'Ree Ahịa',
+    cartTitle: 'Ihe Ndị A Họọrọ',
+    cartEmpty: 'Enweghị ihe ọ bụla. Chọọ ihe tinye.',
+    cartTotal: 'Ego Ole Ọ Bụ',
+    btnCheckout: 'Kụọ Ahịa',
+    payMethodCash: 'Ego Cash',
+    payMethodPOS: 'POS / Kaadị',
+    payMethodTransfer: 'Nyefee Ego (Transfer)',
+    payMethodMobile: 'Ego Ekwentị',
+    checkoutSuccess: 'Ahịa gara nke ọma!',
+    saleFailed: 'Ahịa agaghị. Biko nwaa ọzọ.',
+    receiptTitle: 'Akwụkwọ Nnata Ahịa',
+    printReceipt: 'Bipụta Akwụkwọ',
+    salesHistoryTitle: 'Akụkọ Ahịa na Akwụkwọ',
+    salesHistorySubtitle: 'Hụ ahịa gara aga yana ego abanyela.',
+    colReceiptNo: 'NỌMBA NNATA',
+    colTotalAmount: 'EGO OLE',
+    tabExpenses: 'Ndepụta Ego Fọrọ',
+    expensesTitle: 'Ego I mebiri na nchụso ahịa',
+    expensesSubtitle: 'Dekọọ ebe ego gị na-aga ka ị ghara tụfu uru ahịa.',
+    btnRecordExpense: 'Dekọọ Ego I Mebiri',
+    todayExpenses: 'Ego I Mebiri Taa',
+    weeklyExpenses: 'Ego I Mebiri na Izu a',
+    monthlyExpenses: 'Ego I Mebiri n’Ọnwa a',
+    largestCategory: 'Ebe Kachasị Mebie Ego',
+    modalTitleAddExpense: 'Dekọọ Ego Ọhụrụ I Mebiri',
+    modalTitleEditExpense: 'Ndozi Ihe Ego I Mebiri',
+    fieldExpenseAmount: 'Adịghị Ego',
+    fieldExpenseDate: 'Ụbọchị Ego I Mebiri',
+    fieldExpenseDesc: 'Ihe I Jiri Ego ahù Mee',
+    fieldExpensePayMethod: 'Ụzọ I Siri Kwụọ Ego',
+    fieldReceiptUpload: 'Tinye Akwụkwọ Rasiti (Nhọrọ)',
+    btnSaveExpense: 'Chekwaa Ndekọ Ego',
+    confirmDeleteExpense: 'Ị doro anya na ị chọrọ ihichapụ ndekọ ego a?',
+    deleteExpenseSuccess: 'E wepụla ndekọ ego a nke ọma!',
+    deleteExpenseFailed: 'Ihichapụ ndekọ ego a enweghị isi. Gbalịa ọzọ.',
+    expenseDateFutureError: 'A naghị anabata ụbọchị n’ihu maka ndekọ ego.',
+    tabFinancials: 'Ndegharị Ego',
+    financialsTitle: 'Nchọpụta Ego Ahịa',
+    financialsSubtitle: 'Mgbako ego abanyela, ego i ji zụọ ahịa, uru na ahụike ahịa gị.',
+    revenueLabel: 'Ego Abanyela (Revenue)',
+    cogsLabel: 'Ego E Jiri Zụọ Ahịa E Rere (COGS)',
+    grossProfitLabel: 'Uru Mbụ (Gross Profit)',
+    netProfitLabel: 'Uru Zuru Oke (Net Profit)',
+    cashPositionLabel: 'Ego Dị N’aka (Cash)',
+    inventoryValueLabel: 'Ego Akpa Ahịa Gị ruru',
+    healthScoreLabel: 'Makin Ahụike Ahịa',
+    healthRatingLabel: 'Ọkwa Ahụike Ahịa',
+    periodSelectorLabel: 'Oge Akụkọ',
+    startDateLabel: 'Daga',
+    endDateLabel: 'Ruo',
+    dashTabOverview: 'Ntụhachi Ahịa',
+    dashTabCharts: 'Nlecha Ahịa',
+    dashTabStock: "Ngwa N'Ahịa",
+    dashTabHealth: 'Ahụike Ahịa',
+    dashQuickActionsTitle: 'NzọỤgwu Mba',
+    dashRecordSale: 'Kanyen Ego Azụru',
+    dashRecordSaleSub: "Aha Nke Cash m'ọbụ Banku Ta",
+    dashLogExpense: 'Kanyen Iri Ego',
+    dashLogExpenseSub: 'Gụọ Ngalagwu niile Ahịa gị',
+    dashAddProduct: "Tụkwasị Ngwa Ọ́gh́a N'ụlo Ahịa",
+    dashAddProductSub: 'Kpá nwepụrụ maka aḥịạ uzo',
+    dashCheckStock: 'Lee Kpaa Ngwa Kpam Ahịa Niile',
+    dashCheckStockSub: 'Lechere Akwa agwa nkwere gi ogan irin',
+    dashTodaySales: 'Ahịa Ehere Taa',
+    dashTodayExpenses: 'Ego Efuru Taa',
+    dashActualProfit: 'Ezi Udele Anyị',
+    dashAvailableCash: "Ego Nlecha N'Aka Nkwue",
+    dashStockValue: 'Ọpụ̀ Ọ́nụ Nka Ngwa Ubi',
+    dashItemsInShop: 'Onuogbo Ngwa Anyị Kwakpobiri',
+    dashBestsellersTitle: 'Ngwa Ahịa Kachara Ahia Eriri',
+    dashLowStockTitle: 'Oti Kpesie Ngwa Azula Akwa',
+    dashActivitiesTitle: 'Omimi Ngere & Usoro Ngwere Ahịa',
+    dashHealthTitle: 'Ebere Ahụike Ahịa Gị',
+    tabReports: 'Akụkọ Azụmahịa',
+    reportsTitle: 'Nhazi & Usoro Akụkọ Ego',
+    reportsSubtitle:
+      'Nyochaa ngwaahịa gị, mbipụta akwụkwọ ego, yana mbipute data na-enweghị ịntanịetị.',
+    repTabSales: 'Ego Batara na Ahịa',
+    repTabExpenses: 'Ego Eji Mepụta Ahịa',
+    repTabStock: 'Oru Ngwaahịa & Ahịa',
+    repTabProfit: 'Ezigbo Uru Ahịa',
+    repTabBank: 'Nchịkọta Mbaidị Banki',
+    repTabHistory: 'Akụkọ Ndị Emere',
+    btnExportPDF: 'Deta dịka PDF',
+    btnExportExcel: 'Deta dịka Excel',
+    btnExportCSV: 'Deta dịka CSV',
+    btnPrintReport: 'Bipụta Akụkọ a',
+
+    mockupSalesHeader: 'Record New Sale (Pidgin)',
+    mockupSalesItemLabel: 'Wetin you sell? (Item Name)',
+    mockupSalesItemValue: '2 Bags of Rice',
+    mockupSalesAmountLabel: 'How much you collect? (₦)',
+    mockupSalesAmountValue: '₦ 84,000',
+    mockupSalesSaveBtn: 'Save Record',
+    mockupInvHeader: 'Smart Inventory',
+    mockupInvItem1: 'Indomie Carton',
+    mockupInvRestock: 'Last restocked: Today',
+    mockupInvInStock: 'In Stock',
+    mockupInvItem2: 'Peak Milk (Tin)',
+    mockupInvLowStock: 'Low Stock Warning',
+    mockupInvRemaining: 'Remaining',
+    mockupProfitHeader: 'Profit & Loss Engine',
+    mockupProfitNetTitle: 'Net Profit (This Week)',
+    mockupProfitNetValue: '₦ 142,500',
+    mockupProfitNetTrend: '+15.2% vs Last Week',
+    mockupProfitSales: 'Total Sales',
+    mockupProfitSalesValue: '₦ 380,000',
+    mockupProfitExpenses: 'Total Expenses',
+    mockupProfitExpensesValue: '₦ 237,500',
+    showcaseSalesTitle: 'Record Sales in Seconds',
+    showcaseSalesDesc:
+      'No complicated accounting jargon. Our Pidgin English interface makes it incredibly easy for any shop owner or attendant to log daily sales instantly, saving you hours of manual bookkeeping.',
+    showcaseOfflineTitle: '100% Offline Capable',
+    showcaseOfflineDesc:
+      'Bad network? No problem. Track your inventory and receive low stock alerts entirely offline. BizTrack uses advanced local databases to save your data instantly, syncing securely to the cloud only when your connection returns.',
+    showcaseSmartTitle: 'Make Smart Decisions',
+    showcaseSmartDesc:
+      'Stop guessing if you are making money. Our automated Profit & Loss engine calculates your true net profit in real-time, helping you identify trends and grow your business with bank-grade security.',
   },
   yo: {
     appTitle: 'BizTrack',
@@ -606,16 +1196,16 @@ export const TRANSLATIONS: TranslationDictionary = {
     existingAccount: 'Wọlé Ibudo Igbakori Owo',
     footerDesc: 'Nfi agbara kun ileiṣè ati isẹṣe afirika ti ko fọ oye soke lori iṣowo digital.',
     signInTitle: 'Wọlé Sínu Ibi Owo Rẹ',
-    signInSubtitle: 'Tọpasẹ Nọmba Eto Oju Eko (abi Email) rọru ati Nọmba PIN Irubo Mẹrin rururu.',
+    signInSubtitle: 'Tọpasẹ Nọmba Eto Oju Eko (abi Email) rọru ati Nọmba PIN Irubo Mẹfa rururu.',
     registerTitle: 'Ṣí Alaišiṣi fun Ọja Rẹ Ni Ibika',
     registerSubtitle:
-      'Ko si idi lati ri Ikawe tabi Email gbo oro! Ši alaišiši laigiri pọlu Nọmba Eko Alagbeka tò 4-Digit PIN.',
+      'Ko si idi lati ri Ikawe tabi Email gbo oro! Ši alaišiši laigiri pọlu Nọmba Eko Alagbeka tò 6-Digit PIN.',
     phoneLabel: 'Nọmba Eko Alagbeka (tara Email)',
     phonePlaceholder: 'e.g., 08012345678',
     phoneHelper:
       'Awọn oniwo gbogbo lẹ sọle lo nọmba fóònù alagbeko nikan. Supermarket si lo email.',
-    pinLabel: 'Nọmba PIN Irubo Mẹrin Rara',
-    pinPlaceholder: 'e.g., 1234 (Gẹ́gẹ́bi o ti ń se lori POS)',
+    pinLabel: 'Nọmba PIN Irubo Mẹfa Rara',
+    pinPlaceholder: 'e.g., 123456 (Gẹ́gẹ́bi o ti ń se lori POS)',
     ownerNameLabel: 'Orukọ Gbagede Olopo Oja Rẹ',
     ownerNamePlaceholder: 'e.g., Mama Ngozi tabi Iyaa Wuraola',
     forgotPin: 'Ṣe o gbe PIN rẹ tabi Kpọọlẹ pamọ ni?',
@@ -733,5 +1323,124 @@ export const TRANSLATIONS: TranslationDictionary = {
     colQtyChange: 'IYE TỌ NI PA YI SI',
     colNewBalance: 'IYE TE KÙ NYI RI DE',
     colRemarks: 'IDI / ALAYE ATUNKE',
+    tabSales: 'Taja',
+    cartTitle: 'Ọjà Tí A Yàn',
+    cartEmpty: 'Kò sí nǹkan. Wa ọjà kí o fi kún.',
+    cartTotal: 'Iye Owó Gbapọ',
+    btnCheckout: 'Pari Tita',
+    payMethodCash: 'Owó Ọwọ (Cash)',
+    payMethodPOS: 'POS / Kaadi',
+    payMethodTransfer: 'Fi Owó Ránṣẹ (Transfer)',
+    payMethodMobile: 'Owó orí Ẹrọ (Mobile)',
+    checkoutSuccess: 'Tita ọjà yọrí sí rere!',
+    saleFailed: 'Tita ọjà kùnà. Jọwọ tún gbìyànjú.',
+    receiptTitle: 'Iwe Ẹrí Tita',
+    printReceipt: 'Tẹ Iwe Ẹrí',
+    salesHistoryTitle: 'Ìwé Ìtàn Tita',
+    salesHistorySubtitle: 'Wo àwọn tita tẹ́lẹ̀ àti owó tó wọlé.',
+    colReceiptNo: 'NỌMBA ẸRÍ',
+    colTotalAmount: 'IYE OWÓ',
+    tabExpenses: 'Àkọsílẹ̀ Owó Tí Ó Jáde',
+    expensesTitle: 'Owó Tí Ó Jáde Lẹ́nu Húsùlù',
+    expensesSubtitle: 'Kọ gbogbo owó tó jáde sílẹ̀ láti mọ èrè rẹ gangan.',
+    btnRecordExpense: 'Kọ Owó Tó Jáde Tuntun',
+    todayExpenses: 'Owó Tó Jáde Lónìí',
+    weeklyExpenses: 'Owó Tó Jáde Lọ́sẹ̀ Yìí',
+    monthlyExpenses: 'Owó Tó Jáde Lóṣù Yìí',
+    largestCategory: 'Ẹ̀ka Tó Gba Owó Jùlọ',
+    modalTitleAddExpense: 'Kọ Owó Tó Jáde Tuntun sílẹ̀',
+    modalTitleEditExpense: 'Atúnṣe Owó Tó Jáde',
+    fieldExpenseAmount: 'Iye Owó Tó Jáde',
+    fieldExpenseDate: 'Ọjọ́ Tó Jáde',
+    fieldExpenseDesc: 'Kí Lo Lo Owó Náà Fún',
+    fieldExpensePayMethod: 'Bí O Ṣe San Owó Náà',
+    fieldReceiptUpload: 'Fi Rasiti Kún Un (Kò Pọn Dandan)',
+    btnSaveExpense: 'Fi Owó Tó Jáde Pamọ́',
+    confirmDeleteExpense: 'Ṣé o dájú pé o fẹ́ pa owó tí ó jáde yìí rẹ́?',
+    deleteExpenseSuccess: 'A ti pa owó tí ó jáde rẹ́ láṣeyọrí!',
+    deleteExpenseFailed: 'Kò rọrùn láti pa owó náà rẹ́, jọ̀wọ́ gbìyànjú sẹ́.',
+    expenseDateFutureError: 'Kò gba ọjọ́ ọjọ́wájú fún owó tí ó jáde.',
+    tabFinancials: 'Ìṣirò Owó',
+    financialsTitle: 'Òye Nipa Owó Rẹ',
+    financialsSubtitle:
+      'Ṣayẹwo owo tó wọle, iye owo ti o fi ra ọja, èrè gangan ati àlááfíà oko òwò rẹ.',
+    revenueLabel: 'Owo Tó Wọlé (Revenue)',
+    cogsLabel: 'Owo Gbapọ Ọja Tita (COGS)',
+    grossProfitLabel: 'Èrè Kọkọọkan (Gross Profit)',
+    netProfitLabel: 'Èrè Gangan (Net Profit)',
+    cashPositionLabel: 'Owo Lọwọ (Cash)',
+    inventoryValueLabel: 'Iye Ọjà Tó Kù silẹ',
+    healthScoreLabel: 'Makin Àlááfíà Òwò',
+    healthRatingLabel: 'Ipò Àlááfíà Òwò',
+    periodSelectorLabel: 'Àkókò Àkọsílẹ̀',
+    startDateLabel: 'Láti',
+    endDateLabel: 'Sí',
+    dashTabOverview: 'Akoko Ọja Oni',
+    dashTabCharts: 'Aworan Owó Ọoja',
+    dashTabStock: 'Ẹkún Rẹni Ọjà',
+    dashTabHealth: 'Ilera Owò',
+    dashQuickActionsTitle: 'Awọ̀n Pátá Gbá Lára',
+    dashRecordSale: 'Ṣowopo Owó Títà Ọjà',
+    dashRecordSaleSub: 'Bójú mu owo cashi tàbí transfer lọ́fẹ̀',
+    dashLogExpense: 'Fi Ọmọra owó tó jàsí Kankan',
+    dashLogExpenseSub: 'Lẹsẹẹkankan ra lori aláyàn Ojà re',
+    dashAddProduct: 'Kojọ Ọjà Títún Sínú Shago',
+    dashAddProductSub: 'Ṣefihan orukọ ọjà kò sí fún rájá',
+    dashCheckStock: 'Ṣáwò Gbogbo Ege Oja Re Ni kikun',
+    dashCheckStockSub: 'Kó gbogbon ka ohun èlòmíràn re nígbà',
+    dashTodaySales: 'Titu Owó Ọjà Oni',
+    dashTodayExpenses: 'Owó Tó Jáde Oni',
+    dashActualProfit: 'Èdidi Ere ti a Ni',
+    dashAvailableCash: 'Owo Gbege Tó Wà Ni Ọwò',
+    dashStockValue: 'Idan owo Ọjà Ti A gba rari',
+    dashItemsInShop: 'Ajo-eṣe gbá gba Ọjà gbọrọ',
+    dashBestsellersTitle: 'Ọjà ti won n ra Jùlọ',
+    dashLowStockTitle: 'Ida Oruku Eru Tó fẹ Rèẹ Sile',
+    dashActivitiesTitle: 'Àtúnje Lẹẹjì Báyin, Àwọn Ete',
+    dashHealthTitle: 'Eyo Ilere Gbógbo Ojà Re',
+    tabReports: 'Ìròyìn Owò',
+    reportsTitle: 'Àwọn Ìròyìn Gbèdéke Ọjà',
+    reportsSubtitle: 'Wo ojú owo titi ọjà rẹ, yan ọti titun gbagbọ, ati ki gba sí abẹ-kíkọ.',
+    repTabSales: 'Owó Titi Wọlé',
+    repTabExpenses: 'Owó Nà lójojúmọ́',
+    repTabStock: 'Aṣojú Ojà Lílọ́',
+    repTabProfit: 'Èrè Rere ti Ọjà',
+    repTabBank: 'Ìròyìn ti Bankí',
+    repTabHistory: 'Àtẹ-Àkọ́sì Báyin',
+    btnExportPDF: 'Ya Síṣe sí PDF',
+    btnExportExcel: 'Ya Síṣe sí Excel',
+    btnExportCSV: 'Ya Síṣe sí CSV',
+    btnPrintReport: 'Kọ̀sí Béèrè Ìròyìn',
+
+    mockupSalesHeader: 'Record New Sale (Pidgin)',
+    mockupSalesItemLabel: 'Wetin you sell? (Item Name)',
+    mockupSalesItemValue: '2 Bags of Rice',
+    mockupSalesAmountLabel: 'How much you collect? (₦)',
+    mockupSalesAmountValue: '₦ 84,000',
+    mockupSalesSaveBtn: 'Save Record',
+    mockupInvHeader: 'Smart Inventory',
+    mockupInvItem1: 'Indomie Carton',
+    mockupInvRestock: 'Last restocked: Today',
+    mockupInvInStock: 'In Stock',
+    mockupInvItem2: 'Peak Milk (Tin)',
+    mockupInvLowStock: 'Low Stock Warning',
+    mockupInvRemaining: 'Remaining',
+    mockupProfitHeader: 'Profit & Loss Engine',
+    mockupProfitNetTitle: 'Net Profit (This Week)',
+    mockupProfitNetValue: '₦ 142,500',
+    mockupProfitNetTrend: '+15.2% vs Last Week',
+    mockupProfitSales: 'Total Sales',
+    mockupProfitSalesValue: '₦ 380,000',
+    mockupProfitExpenses: 'Total Expenses',
+    mockupProfitExpensesValue: '₦ 237,500',
+    showcaseSalesTitle: 'Record Sales in Seconds',
+    showcaseSalesDesc:
+      'No complicated accounting jargon. Our Pidgin English interface makes it incredibly easy for any shop owner or attendant to log daily sales instantly, saving you hours of manual bookkeeping.',
+    showcaseOfflineTitle: '100% Offline Capable',
+    showcaseOfflineDesc:
+      'Bad network? No problem. Track your inventory and receive low stock alerts entirely offline. BizTrack uses advanced local databases to save your data instantly, syncing securely to the cloud only when your connection returns.',
+    showcaseSmartTitle: 'Make Smart Decisions',
+    showcaseSmartDesc:
+      'Stop guessing if you are making money. Our automated Profit & Loss engine calculates your true net profit in real-time, helping you identify trends and grow your business with bank-grade security.',
   },
 };

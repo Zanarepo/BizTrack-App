@@ -1,57 +1,129 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthLayout } from '../layouts/AuthLayout';
 import { AppLayout } from '../layouts/AppLayout';
 import { ProtectedRoute } from './ProtectedRoute';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
-// Public Screen Imports
-import { Landing } from '../pages/Landing';
-import { Login } from '../pages/Login';
-import { Register } from '../pages/Register';
-import { ForgotPassword } from '../pages/ForgotPassword';
-import { NotFound } from '../pages/NotFound';
-import { DesignSystem } from '../pages/DesignSystem';
+// 🚀 Performance Optimization: Route-Level Code Splitting
+// By lazy loading these pages, we split our massive 1.7MB JS bundle into smaller chunks.
+// Users only download the JavaScript for the specific page they are visiting.
 
-// Protected Workspace & Onboarding Screen Imports
-import { BusinessOnboarding } from '../pages/BusinessOnboarding';
-import { DashboardPlaceholder } from '../pages/DashboardPlaceholder';
-import { Settings } from '../pages/Settings';
-import { Profile } from '../pages/Profile';
-import { Inventory } from '../pages/Inventory';
-import { InventoryHistory } from '../pages/InventoryHistory';
+const Landing = React.lazy(() =>
+  import('../pages/Landing').then((module) => ({ default: module.Landing })),
+);
+const Login = React.lazy(() =>
+  import('../pages/Login').then((module) => ({ default: module.Login })),
+);
+const Register = React.lazy(() =>
+  import('../pages/Register').then((module) => ({ default: module.Register })),
+);
+const ForgotPassword = React.lazy(() =>
+  import('../pages/ForgotPassword').then((module) => ({ default: module.ForgotPassword })),
+);
+const NotFound = React.lazy(() =>
+  import('../pages/NotFound').then((module) => ({ default: module.NotFound })),
+);
+const DesignSystem = React.lazy(() =>
+  import('../pages/DesignSystem').then((module) => ({ default: module.DesignSystem })),
+);
+
+const BusinessOnboarding = React.lazy(() =>
+  import('../pages/BusinessOnboarding').then((module) => ({ default: module.BusinessOnboarding })),
+);
+const DashboardPage = React.lazy(() =>
+  import('../pages/DashboardPage').then((module) => ({ default: module.DashboardPage })),
+);
+const Settings = React.lazy(() =>
+  import('../pages/Settings').then((module) => ({ default: module.Settings })),
+);
+const Profile = React.lazy(() =>
+  import('../pages/Profile').then((module) => ({ default: module.Profile })),
+);
+const Inventory = React.lazy(() =>
+  import('../pages/Inventory').then((module) => ({ default: module.Inventory })),
+);
+const InventoryHistory = React.lazy(() =>
+  import('../pages/InventoryHistory').then((module) => ({ default: module.InventoryHistory })),
+);
+const NewSale = React.lazy(() =>
+  import('../pages/NewSale').then((module) => ({ default: module.NewSale })),
+);
+const SalesHistory = React.lazy(() =>
+  import('../pages/SalesHistory').then((module) => ({ default: module.SalesHistory })),
+);
+const Expenses = React.lazy(() =>
+  import('../pages/Expenses').then((module) => ({ default: module.Expenses })),
+);
+const NewExpense = React.lazy(() =>
+  import('../pages/NewExpense').then((module) => ({ default: module.NewExpense })),
+);
+const EditExpense = React.lazy(() =>
+  import('../pages/EditExpense').then((module) => ({ default: module.EditExpense })),
+);
+const Financials = React.lazy(() =>
+  import('../pages/Financials').then((module) => ({ default: module.Financials })),
+);
+const ReportsPage = React.lazy(() =>
+  import('../pages/ReportsPage').then((module) => ({ default: module.ReportsPage })),
+);
+
+const SuspenseFallback = () => (
+  <div
+    style={{
+      height: '100vh',
+      width: '100vw',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'var(--bg-app)',
+    }}
+  >
+    <LoadingSpinner size="lg" color="var(--brand-primary)" />
+  </div>
+);
 
 export const AppRoutes: React.FC = () => {
   return (
-    <Routes>
-      {/* Root Public Landing */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/design-system" element={<DesignSystem />} />
+    <Suspense fallback={<SuspenseFallback />}>
+      <Routes>
+        {/* Root Public Landing */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/design-system" element={<DesignSystem />} />
 
-      {/* Authentication Screens (Wrapped in AuthLayout) */}
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        {/* Authentication Screens (Wrapped in AuthLayout) */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Protected Onboarding Screen for Authenticated Users without a Business */}
-        <Route element={<ProtectedRoute requireBusiness={false} />}>
-          <Route path="/onboarding" element={<BusinessOnboarding />} />
+          {/* Protected Onboarding Screen for Authenticated Users without a Business */}
+          <Route element={<ProtectedRoute requireBusiness={false} />}>
+            <Route path="/onboarding" element={<BusinessOnboarding />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* Protected Business Workspace (Requires BOTH Authentication and a Registered Business) */}
-      <Route element={<ProtectedRoute requireBusiness={true} />}>
-        <Route element={<AppLayout />}>
-          <Route path="/dashboard" element={<DashboardPlaceholder />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/inventory-ledger" element={<InventoryHistory />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+        {/* Protected Business Workspace (Requires BOTH Authentication and a Registered Business) */}
+        <Route element={<ProtectedRoute requireBusiness={true} />}>
+          <Route element={<AppLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/inventory-ledger" element={<InventoryHistory />} />
+            <Route path="/sales" element={<NewSale />} />
+            <Route path="/sales-history" element={<SalesHistory />} />
+            <Route path="/expenses" element={<Expenses />} />
+            <Route path="/expenses/new" element={<NewExpense />} />
+            <Route path="/expenses/edit/:id" element={<EditExpense />} />
+            <Route path="/financials" element={<Financials />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* Fallback 404 Route */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        {/* Fallback 404 Route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 };

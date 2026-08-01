@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
 import { Button, Input, Toast } from '../components';
-import { User, Phone, Lock, HelpCircle, ArrowRight } from 'lucide-react';
+import { User, Phone, Lock, HelpCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const SECURITY_QUESTIONS = [
   "What is your mother's maiden name?",
@@ -23,6 +23,7 @@ export const Register: React.FC = () => {
   const [securityQuestion, setSecurityQuestion] = useState(SECURITY_QUESTIONS[0]);
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -35,8 +36,8 @@ export const Register: React.FC = () => {
       return;
     }
 
-    if (pinOrPassword.length < 4) {
-      setErrorMessage('Your secret PIN or password must be at least 4 digits/characters.');
+    if (pinOrPassword.length < 6) {
+      setErrorMessage('Your secret PIN or password must be at least 6 digits/characters.');
       return;
     }
 
@@ -132,12 +133,30 @@ export const Register: React.FC = () => {
 
         <Input
           label={t('pinLabel')}
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder={t('pinPlaceholder')}
           value={pinOrPassword}
           onChange={(e) => setPinOrPassword(e.target.value)}
           required
           leftIcon={<Lock size={17} />}
+          rightIcon={
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'inherit',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
+          }
         />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>

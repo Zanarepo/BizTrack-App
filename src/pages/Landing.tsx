@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Badge } from '../components/Badge';
-import { Card } from '../components/Card';
 import { useLanguage } from '../hooks/useLanguage';
-import { ArrowRight, Sparkles, ShieldCheck, Layers, TrendingUp, Smartphone } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { ArrowRight, Sparkles, TrendingUp } from 'lucide-react';
+import { LandingFeatureShowcase } from '../components/landing/LandingFeatureShowcase';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export const Landing: React.FC = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
 
   const containerStyle: React.CSSProperties = {
     minHeight: '100vh',
@@ -20,6 +23,8 @@ export const Landing: React.FC = () => {
     textAlign: 'center',
     maxWidth: '1280px',
     margin: '0 auto',
+    position: 'relative',
+    overflow: 'hidden',
   };
 
   const heroStyle: React.CSSProperties = {
@@ -41,6 +46,52 @@ export const Landing: React.FC = () => {
 
   return (
     <div style={containerStyle} className="animate-fade-in">
+      {/* Background Mesh Glows */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-10%',
+          left: '-5%',
+          width: '400px',
+          height: '400px',
+          background: 'var(--brand-primary-light)',
+          filter: 'blur(100px)',
+          borderRadius: '50%',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '20%',
+          right: '-10%',
+          width: '500px',
+          height: '500px',
+          background: 'var(--brand-cyan)',
+          opacity: 0.1,
+          filter: 'blur(120px)',
+          borderRadius: '50%',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: '30%',
+          left: '30%',
+          width: '300px',
+          height: '300px',
+          background: 'var(--brand-accent)',
+          opacity: 0.05,
+          filter: 'blur(100px)',
+          borderRadius: '50%',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
+
       {/* Streamlined Top Header */}
       <header
         style={{
@@ -49,6 +100,8 @@ export const Landing: React.FC = () => {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '16px',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -66,22 +119,33 @@ export const Landing: React.FC = () => {
           </h2>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <ThemeToggle />
           <LanguageSelector />
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <Button variant="outline" size="sm">
-              {t('signInButton').replace('🚀', '')}
-            </Button>
-          </Link>
-          <Link to="/register" style={{ textDecoration: 'none' }}>
-            <Button variant="primary" size="sm" rightIcon={<ArrowRight size={16} />}>
-              {t('getStartedFree')}
-            </Button>
-          </Link>
+          {user ? (
+            <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+              <Button variant="primary" size="sm" rightIcon={<ArrowRight size={16} />}>
+                Go to Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <Button variant="outline" size="sm">
+                  {t('signInButton').replace('', '')}
+                </Button>
+              </Link>
+              <Link to="/register" style={{ textDecoration: 'none' }}>
+                <Button variant="primary" size="sm" rightIcon={<ArrowRight size={16} />}>
+                  {t('getStartedFree')}
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </header>
 
       {/* Hero Section */}
-      <main style={heroStyle}>
+      <main style={{ ...heroStyle, position: 'relative', zIndex: 1 }}>
         <Badge
           variant="success"
           showDot
@@ -135,82 +199,7 @@ export const Landing: React.FC = () => {
           </Link>
         </div>
 
-        {/* Interactive Feature Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '20px',
-            width: '100%',
-            marginTop: '56px',
-            textAlign: 'left',
-          }}
-        >
-          <Card
-            title="Instant Ledger"
-            subtitle="Offline Dexie Persistence"
-            isInteractive
-            style={{ padding: '20px' }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                marginTop: '10px',
-                color: 'var(--text-muted)',
-                fontSize: '0.9rem',
-              }}
-            >
-              <Smartphone size={22} color="var(--brand-primary)" />
-              <span>Record cash flow instantly even without network connection.</span>
-            </div>
-          </Card>
-
-          <Card
-            title="Audit Security"
-            subtitle="Encrypted Recovery"
-            isInteractive
-            style={{ padding: '20px' }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                marginTop: '10px',
-                color: 'var(--text-muted)',
-                fontSize: '0.9rem',
-              }}
-            >
-              <ShieldCheck size={22} color="var(--brand-cyan)" />
-              <span>Multi-factor PIN authorization and bank-grade data peace of mind.</span>
-            </div>
-          </Card>
-
-          <Card
-            title="Executive Growth"
-            subtitle="Automated Reporting"
-            isInteractive
-            style={{ padding: '20px' }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                marginTop: '10px',
-                color: 'var(--text-muted)',
-                fontSize: '0.9rem',
-              }}
-            >
-              <Layers size={22} color="var(--brand-accent)" />
-              <span>
-                Real-time billing status tags, smart query filters, and clean ledger analytics.
-              </span>
-            </div>
-          </Card>
-        </div>
+        <LandingFeatureShowcase />
       </main>
 
       {/* Footer */}

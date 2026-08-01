@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS product_categories (
 
 ALTER TABLE product_categories ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Business owns product categories" ON product_categories;
 CREATE POLICY "Business owns product categories"
   ON product_categories
   FOR ALL
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Business owns products" ON products;
 CREATE POLICY "Business owns products"
   ON products
   FOR ALL
@@ -82,6 +84,7 @@ CREATE TABLE IF NOT EXISTS inventory_transactions (
 
 ALTER TABLE inventory_transactions ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Business owns inventory transactions" ON inventory_transactions;
 CREATE POLICY "Business owns inventory transactions"
   ON inventory_transactions
   FOR ALL
@@ -103,7 +106,8 @@ CREATE INDEX IF NOT EXISTS idx_inventory_transactions_created_at ON inventory_tr
 
 -- 4. Inventory Summary View
 -- Computes real-time stock balance directly from immutable transaction logs
-CREATE OR REPLACE VIEW inventory_summary AS
+CREATE OR REPLACE VIEW inventory_summary 
+WITH (security_invoker = true) AS
 SELECT 
   product_id,
   SUM(quantity) AS current_stock
