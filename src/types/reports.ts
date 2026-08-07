@@ -61,7 +61,8 @@ export interface SalesReportData {
   reportingPeriod: string;
   transactionCount: number;
   totalRevenue: number;
-  estimatedGrossProfit: number;
+  totalCOGS: number;
+  grossProfit: number;
   paymentMethodsBreakdown: { [method: string]: number };
   topSellingProducts: Array<{ name: string; qty: number; revenue: number }>;
   salesByDay: Array<{ date: string; revenue: number; transactions: number }>;

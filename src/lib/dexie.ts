@@ -18,7 +18,8 @@ export interface SyncQueueItem {
     | 'expense_category'
     | 'profile'
     | 'business'
-    | 'report_history';
+    | 'report_history'
+    | 'audit_log';
   payload: unknown;
   createdAt: number;
   status: 'pending' | 'syncing' | 'failed';
@@ -50,7 +51,21 @@ export interface CachedExpense {
   category: string;
 }
 
+export interface CachedAuditLog {
+  id: string;
+  business_id: string;
+  user_id: string;
+  action: string;
+  entity: string;
+  entity_id?: string;
+  metadata: Record<string, unknown>;
+  user_agent: string;
+  created_at: string;
+  status: 'synced' | 'pending';
+}
+
 export class BizTrackDatabase extends Dexie {
+  auditLogs!: EntityTable<CachedAuditLog, 'id'>;
   syncQueue!: EntityTable<SyncQueueItem, 'id'>;
   cachedProducts!: EntityTable<CachedProduct, 'id'>;
   cachedSales!: EntityTable<CachedSale, 'id'>;
@@ -156,9 +171,25 @@ export class BizTrackDatabase extends Dexie {
       inventoryTransactions: 'id, business_id, product_id, movement_type, created_at',
       sales: 'id, business_id, receipt_number, created_at',
       saleItems: 'id, sale_id, product_id',
+      expenses: 'id, business_id, category_id, expense_date, deleted_at',
+      reportHistory: 'id, businessId, reportType, exportFormat, generatedAt',
+    });
+    this.version(9).stores({
+      syncQueue: '++id, action, entity, status, createdAt, retryCount',
+      cachedProducts: 'id, name, price, stock, updatedAt',
+      cachedSales: 'id, date, total, status',
+      cachedExpenses: 'id, date, amount, category',
+      cachedBusinesses: 'id, owner_id, business_name, updated_at',
+      cachedProfiles: 'id, email, phone',
+      products: 'id, business_id, category_id, product_name, sku, is_active',
+      productCategories: 'id, business_id, name',
+      inventoryTransactions: 'id, business_id, product_id, movement_type, created_at',
+      sales: 'id, business_id, receipt_number, created_at',
+      saleItems: 'id, sale_id, product_id',
       expenseCategories: 'id, business_id, name',
       expenses: 'id, business_id, category_id, expense_date, deleted_at',
       reportHistory: 'id, businessId, reportType, exportFormat, generatedAt',
+      auditLogs: 'id, business_id, user_id, action, entity, created_at, status',
     });
   }
 }

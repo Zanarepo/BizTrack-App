@@ -468,7 +468,7 @@ export const ReportsPage: React.FC = () => {
                           fontWeight: '500',
                         }}
                       >
-                        Est. Gross Profit
+                        Gross Profit
                       </p>
                       <h3
                         style={{
@@ -479,7 +479,7 @@ export const ReportsPage: React.FC = () => {
                           marginTop: '4px',
                         }}
                       >
-                        ₦{salesData.estimatedGrossProfit.toLocaleString()}
+                        ₦{salesData.grossProfit.toLocaleString()}
                       </h3>
                     </div>
                     <div
@@ -539,7 +539,7 @@ export const ReportsPage: React.FC = () => {
                           marginTop: '4px',
                         }}
                       >
-                        ₦{(salesData.paymentMethodsBreakdown['Cash'] || 0).toLocaleString()}
+                        ₦{(salesData.paymentMethodsBreakdown['CASH'] || 0).toLocaleString()}
                       </h3>
                     </div>
                   </div>

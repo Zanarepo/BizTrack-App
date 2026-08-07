@@ -57,11 +57,13 @@ export class ReportingService {
     );
 
     let totalRevenue = 0;
+    let totalCOGS = 0;
+    let grossProfit = 0;
     const paymentMethodsBreakdown: { [method: string]: number } = {
-      Cash: 0,
-      'POS / Card': 0,
-      Transfer: 0,
-      Mobile: 0,
+      CASH: 0,
+      POS: 0,
+      TRANSFER: 0,
+      MOBILE_MONEY: 0,
     };
     const productSalesMap: { [name: string]: { qty: number; revenue: number } } = {};
     const salesByDayMap: { [date: string]: { revenue: number; transactions: number } } = {};
@@ -70,7 +72,9 @@ export class ReportingService {
     for (const sale of filteredSales) {
       const amount = Number(sale.total_amount) || 0;
       totalRevenue += amount;
-      const payMethod = sale.payment_method || 'Cash';
+      totalCOGS += Number(sale.total_cost) || 0;
+      grossProfit += Number(sale.gross_profit) || 0;
+      const payMethod = (sale.payment_method || 'CASH').toUpperCase();
       paymentMethodsBreakdown[payMethod] = (paymentMethodsBreakdown[payMethod] || 0) + amount;
 
       const dateStr = (sale.created_at || new Date().toISOString()).split('T')[0];
@@ -113,16 +117,13 @@ export class ReportingService {
       .map(([date, val]) => ({ date, revenue: val.revenue, transactions: val.transactions }))
       .sort((a, b) => b.date.localeCompare(a.date));
 
-    // Estimated COGS (default 65% of revenue if not directly calculated)
-    const estimatedCOGS = totalRevenue * 0.65;
-    const estimatedGrossProfit = totalRevenue - estimatedCOGS;
-
     return {
       businessName,
       reportingPeriod: this.getPeriodLabel(filter),
       transactionCount: filteredSales.length,
       totalRevenue,
-      estimatedGrossProfit,
+      totalCOGS,
+      grossProfit,
       paymentMethodsBreakdown,
       topSellingProducts,
       salesByDay,
@@ -287,8 +288,8 @@ export class ReportingService {
     const expenseReport = await this.generateExpenseReport(businessId, filter);
 
     const revenue = salesReport.totalRevenue;
-    const cogs = salesReport.totalRevenue * 0.65; // Based on Financial Engine patterns
-    const grossProfit = revenue - cogs;
+    const cogs = salesReport.totalCOGS;
+    const grossProfit = salesReport.grossProfit;
     const expenses = expenseReport.totalExpenses;
     const netProfit = grossProfit - expenses;
     const profitMargin = revenue > 0 ? Math.round((netProfit / revenue) * 100) : 0;

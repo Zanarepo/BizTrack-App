@@ -12,6 +12,8 @@ import type { Sale, SaleItem } from '../types/sales';
 
 interface SaleWithItems extends Sale {
   productNames?: string;
+  itemCount?: number;
+  firstItemName?: string;
 }
 
 export const SalesHistory: React.FC = () => {
@@ -22,7 +24,9 @@ export const SalesHistory: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
-  const [selectedSaleItems, setSelectedSaleItems] = useState<SaleItem[]>([]);
+  const [selectedSaleItems, setSelectedSaleItems] = useState<
+    (SaleItem & { product_name?: string })[]
+  >([]);
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
 
   // Filter states
@@ -145,6 +149,7 @@ export const SalesHistory: React.FC = () => {
           const items = await db.saleItems.where('sale_id').equals(sale.id).toArray();
           const itemsWithNames = await Promise.all(
             items.map(async (item) => {
+              if (item.custom_name) return item.custom_name;
               const prod = await db.products.get(item.product_id);
               return prod ? prod.product_name : 'Unknown Product';
             }),
@@ -152,6 +157,8 @@ export const SalesHistory: React.FC = () => {
           return {
             ...sale,
             productNames: itemsWithNames.join(', '),
+            itemCount: itemsWithNames.length,
+            firstItemName: itemsWithNames[0],
           };
         }),
       );
@@ -175,13 +182,25 @@ export const SalesHistory: React.FC = () => {
     return matchesSearch && matchesPayMethod && matchesStartDate && matchesEndDate;
   });
 
-  const totalRevenue = sales.reduce((acc, sale) => acc + sale.total_amount, 0);
-  const totalGrossProfit = sales.reduce((acc, sale) => acc + Number(sale.gross_profit || 0), 0);
+  const totalRevenue = filteredSales.reduce((acc, sale) => acc + sale.total_amount, 0);
+  const totalGrossProfit = filteredSales.reduce(
+    (acc, sale) => acc + Number(sale.gross_profit || 0),
+    0,
+  );
 
   const viewReceipt = async (sale: Sale) => {
     const items = await db.saleItems.where('sale_id').equals(sale.id).toArray();
+    const itemsWithNames = await Promise.all(
+      items.map(async (item) => {
+        const prod = await db.products.get(item.product_id);
+        return {
+          ...item,
+          product_name: item.custom_name || (prod ? prod.product_name : 'Unknown Product'),
+        };
+      }),
+    );
     setSelectedSale(sale);
-    setSelectedSaleItems(items);
+    setSelectedSaleItems(itemsWithNames);
     setIsReceiptOpen(true);
   };
 
@@ -271,7 +290,7 @@ export const SalesHistory: React.FC = () => {
             Total Sales Count
           </p>
           <p style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--text-main)', margin: 0 }}>
-            {sales.length}
+            {filteredSales.length}
           </p>
         </Card>
       </div>
@@ -440,7 +459,13 @@ export const SalesHistory: React.FC = () => {
             </thead>
             <tbody>
               {paginatedSales.map((sale) => (
-                <tr key={sale.id}>
+                <tr
+                  key={sale.id}
+                  onClick={() => viewReceipt(sale)}
+                  className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                  style={{ cursor: 'pointer' }}
+                  title="Click to view full receipt"
+                >
                   <td>
                     <div className="font-medium text-slate-800 dark:text-slate-200">
                       {formatDate(sale.created_at || '')}
@@ -454,13 +479,12 @@ export const SalesHistory: React.FC = () => {
                   <td
                     style={{
                       maxWidth: '240px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
                     }}
                   >
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                      {sale.productNames || 'No items'}
+                    <span className="font-medium text-slate-700 dark:text-slate-300 text-sm">
+                      {sale.itemCount && sale.itemCount > 1
+                        ? 'Multiple Items'
+                        : sale.firstItemName || 'No items'}
                     </span>
                   </td>
                   <td>
@@ -472,7 +496,13 @@ export const SalesHistory: React.FC = () => {
                     {formatCurrency(sale.total_amount)}
                   </td>
                   <td>
-                    <Button variant="outline" onClick={() => viewReceipt(sale)}>
+                    <Button
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        viewReceipt(sale);
+                      }}
+                    >
                       View Receipt
                     </Button>
                   </td>
@@ -494,13 +524,17 @@ export const SalesHistory: React.FC = () => {
           {paginatedSales.map((sale) => (
             <Card
               key={sale.id}
+              onClick={() => viewReceipt(sale)}
+              className="cursor-pointer hover:border-brand-primary transition-colors"
               style={{
                 padding: '16px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px',
                 border: '1px solid var(--border-color)',
+                cursor: 'pointer',
               }}
+              title="Click to view full receipt"
             >
               <div
                 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
@@ -514,13 +548,16 @@ export const SalesHistory: React.FC = () => {
               </div>
               <div
                 style={{
-                  fontSize: '1rem',
-                  fontWeight: 800,
-                  color: 'var(--text-main)',
+                  display: 'flex',
+                  alignItems: 'center',
                   marginTop: '4px',
                 }}
               >
-                {sale.productNames || 'No items'}
+                <span className="text-base font-bold text-slate-800 dark:text-slate-200">
+                  {sale.itemCount && sale.itemCount > 1
+                    ? 'Multiple Items'
+                    : sale.firstItemName || 'No items'}
+                </span>
               </div>
               <div
                 style={{
@@ -537,7 +574,14 @@ export const SalesHistory: React.FC = () => {
                 >
                   {formatCurrency(sale.total_amount)}
                 </span>
-                <Button size="sm" variant="outline" onClick={() => viewReceipt(sale)}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    viewReceipt(sale);
+                  }}
+                >
                   View Receipt
                 </Button>
               </div>

@@ -1,4 +1,4 @@
-import { db } from '../lib/dexie';
+import { db, type CachedAuditLog } from '../lib/dexie';
 import { supabase } from '../lib/supabase';
 import type { Business } from '../types/business';
 import type { Profile } from '../types/auth';
@@ -202,6 +202,26 @@ export const processSyncQueue = async (): Promise<number> => {
               await handleFailedSync(item.id!, error);
             }
           }
+        } else if (item.entity === 'audit_log') {
+          if (item.action === 'CREATE') {
+            const payload = item.payload as Record<string, unknown>;
+            // Remove local 'status' flag before inserting into Supabase
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { status, ...dbPayload } = payload;
+            const { error } = await supabase.from('audit_logs').insert([dbPayload]);
+            if (!error) {
+              if (typeof dbPayload.id === 'string') {
+                const existing = await db.auditLogs.get(dbPayload.id);
+                if (existing) {
+                  await db.auditLogs.update(dbPayload.id, { status: 'synced' });
+                }
+              }
+              await db.syncQueue.delete(item.id!);
+              syncedCount++;
+            } else {
+              await handleFailedSync(item.id!, error);
+            }
+          }
         } else {
           await handleFailedSync(item.id!, new Error('Unknown entity or action'));
         }
@@ -300,6 +320,20 @@ export const syncFromServer = async (businessId: string): Promise<boolean> => {
           total: s.total_amount,
           status: 'synced',
         })),
+      );
+    }
+
+    // 4. Sync recent Audit Logs (last 30 days)
+    const auditRes = await supabase
+      .from('audit_logs')
+      .select('*')
+      .eq('business_id', businessId)
+      .gte('created_at', thirtyDaysAgo.toISOString())
+      .order('created_at', { ascending: false })
+      .limit(150);
+    if (auditRes.data) {
+      await db.auditLogs.bulkPut(
+        (auditRes.data as unknown as CachedAuditLog[]).map((l) => ({ ...l, status: 'synced' })),
       );
     }
 

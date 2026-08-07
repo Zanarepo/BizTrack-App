@@ -20,6 +20,7 @@ export interface SaleItem {
   selling_price: number;
   line_total: number;
   line_profit: number;
+  custom_name?: string;
   created_at?: string;
 }
 

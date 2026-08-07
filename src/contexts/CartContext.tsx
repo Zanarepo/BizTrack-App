@@ -5,6 +5,8 @@ import type { PaymentMethod } from '../types/sales';
 export interface CartItem {
   product: Product;
   quantity: number;
+  custom_name?: string;
+  custom_price?: number;
 }
 
 export interface CartContextType {
@@ -13,7 +15,12 @@ export interface CartContextType {
   subtotal: number;
   totalCost: number;
   grossProfit: number;
-  addToCart: (product: Product, quantity?: number) => void;
+  addToCart: (
+    product: Product,
+    quantity?: number,
+    custom_name?: string,
+    custom_price?: number,
+  ) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;

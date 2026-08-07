@@ -9,8 +9,10 @@ import { Button } from '../components/Button';
 import { SearchInput } from '../components/SearchInput';
 import { Toast } from '../components/Toast';
 import { Modal } from '../components/Modal';
-import { Trash2, Plus, ShoppingCart } from 'lucide-react';
+import { Trash2, Plus, ShoppingCart, Tag } from 'lucide-react';
 import type { PaymentMethod } from '../types/sales';
+import { db } from '../lib/dexie';
+import { Input } from '../components/Input';
 
 export const NewSale: React.FC = () => {
   const { t } = useLanguage();
@@ -26,6 +28,11 @@ export const NewSale: React.FC = () => {
   const [confirmMethod, setConfirmMethod] = useState<PaymentMethod>('CASH');
   const [isProcessing, setIsProcessing] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [inputModes, setInputModes] = useState<Record<string, 'qty' | 'amount'>>({});
+
+  const [isCustomItemOpen, setIsCustomItemOpen] = useState(false);
+  const [customItemName, setCustomItemName] = useState('');
+  const [customItemAmount, setCustomItemAmount] = useState('');
 
   const formatCurrency = (val: number) =>
     `${currSymbol}${Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -81,6 +88,49 @@ export const NewSale: React.FC = () => {
     } else {
       setToast({ message: t('saleFailed'), type: 'error' });
     }
+  };
+
+  const handleAddCustomItem = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const businessId = products[0]?.business_id; // Derive from existing products or useBusiness if available
+    if (!businessId) return;
+
+    const amount = parseFloat(customItemAmount);
+    if (isNaN(amount) || amount <= 0 || !customItemName.trim()) {
+      setToast({ message: 'Invalid name or amount', type: 'error' });
+      return;
+    }
+
+    let systemProd = await db.products.where('sku').equals('SYSTEM_CUSTOM').first();
+    if (!systemProd) {
+      const newId = crypto.randomUUID();
+      systemProd = {
+        id: newId,
+        business_id: businessId,
+        product_name: 'Custom Item',
+        sku: 'SYSTEM_CUSTOM',
+        cost_price: 0,
+        selling_price: 0,
+        unit: 'unit',
+        minimum_stock: 0,
+        is_active: false,
+      };
+      await db.products.put(systemProd);
+
+      // Enqueue the system product creation so it syncs to Supabase
+      await db.syncQueue.put({
+        action: 'CREATE',
+        entity: 'product',
+        payload: systemProd,
+        status: 'pending',
+        createdAt: Date.now(),
+        retryCount: 0,
+      });
+    }
+
+    addToCart(systemProd, 1, customItemName.trim(), amount);
+    setIsCustomItemOpen(false);
+    setToast({ message: `${customItemName.trim()} added`, type: 'success' });
   };
 
   // Inline CSS Styles matching Design System
@@ -172,17 +222,31 @@ export const NewSale: React.FC = () => {
             <ShoppingCart size={22} color="var(--brand-primary)" />
             {t('cartTitle')}
           </span>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => {
-              setSearchQuery('');
-              setIsSelectOpen(true);
-            }}
-            leftIcon={<Plus size={16} />}
-          >
-            Add Item
-          </Button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCustomItemName('');
+                setCustomItemAmount('');
+                setIsCustomItemOpen(true);
+              }}
+              leftIcon={<Tag size={16} />}
+            >
+              Custom Item
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                setSearchQuery('');
+                setIsSelectOpen(true);
+              }}
+              leftIcon={<Plus size={16} />}
+            >
+              Add Item
+            </Button>
+          </div>
         </div>
 
         {/* Full-width Cart List */}
@@ -204,6 +268,7 @@ export const NewSale: React.FC = () => {
               {cart.map((item) => {
                 const cat = categories.find((c) => c.id === item.product.category_id);
                 const categoryName = cat ? cat.name : 'General';
+                const mode = inputModes[item.product.id] || 'qty';
                 return (
                   <div key={item.product.id} style={cartItemStyle}>
                     <div style={{ minWidth: 0, flex: 1 }}>
@@ -219,63 +284,181 @@ export const NewSale: React.FC = () => {
                         {categoryName}
                       </span>
                       <strong style={{ fontSize: '1.1rem', color: 'var(--text-main)' }}>
-                        {item.product.product_name}
+                        {item.custom_name || item.product.product_name}
                       </strong>
                       <div
                         style={{ color: 'var(--brand-primary)', fontWeight: 800, marginTop: '2px' }}
                       >
-                        {formatCurrency(Number(item.product.selling_price) * item.quantity)}
+                        {formatCurrency(
+                          (item.custom_price ?? Number(item.product.selling_price)) * item.quantity,
+                        )}
                       </div>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <button
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-end',
+                          gap: '4px',
+                        }}
+                      >
+                        <div
                           style={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
-                            border: '1px solid var(--border-color)',
-                            background: 'var(--bg-app)',
-                            color: 'var(--text-main)',
-                            cursor: 'pointer',
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 700,
-                          }}
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                        >
-                          -
-                        </button>
-                        <span
-                          style={{
-                            width: '24px',
-                            textAlign: 'center',
-                            fontWeight: 800,
-                            fontSize: '1.1rem',
-                          }}
-                        >
-                          {item.quantity}
-                        </span>
-                        <button
-                          style={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
+                            gap: '4px',
+                            backgroundColor: 'var(--bg-app)',
+                            padding: '2px',
+                            borderRadius: 'var(--radius-sm)',
                             border: '1px solid var(--border-color)',
-                            background: 'var(--bg-app)',
-                            color: 'var(--text-main)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 700,
                           }}
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                         >
-                          +
-                        </button>
+                          <button
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.7rem',
+                              fontWeight: 600,
+                              borderRadius: '4px',
+                              backgroundColor:
+                                mode === 'qty' ? 'var(--brand-primary)' : 'transparent',
+                              color: mode === 'qty' ? 'white' : 'var(--text-muted)',
+                              border: 'none',
+                              cursor: 'pointer',
+                            }}
+                            onClick={() =>
+                              setInputModes((prev) => ({ ...prev, [item.product.id]: 'qty' }))
+                            }
+                          >
+                            QTY
+                          </button>
+                          <button
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.7rem',
+                              fontWeight: 600,
+                              borderRadius: '4px',
+                              backgroundColor:
+                                mode === 'amount' ? 'var(--brand-primary)' : 'transparent',
+                              color: mode === 'amount' ? 'white' : 'var(--text-muted)',
+                              border: 'none',
+                              cursor: 'pointer',
+                            }}
+                            onClick={() =>
+                              setInputModes((prev) => ({ ...prev, [item.product.id]: 'amount' }))
+                            }
+                          >
+                            AMT
+                          </button>
+                        </div>
+                        {mode === 'qty' ? (
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              marginTop: '4px',
+                            }}
+                          >
+                            <button
+                              style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                border: '1px solid var(--border-color)',
+                                background: 'var(--bg-app)',
+                                color: 'var(--text-main)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontWeight: 700,
+                              }}
+                              onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            >
+                              -
+                            </button>
+                            <span
+                              style={{
+                                width: '36px',
+                                textAlign: 'center',
+                                fontWeight: 800,
+                                fontSize: '1rem',
+                              }}
+                            >
+                              {Number(item.quantity).toFixed(2).replace(/\.00$/, '')}
+                            </span>
+                            <button
+                              style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                border: '1px solid var(--border-color)',
+                                background: 'var(--bg-app)',
+                                color: 'var(--text-main)',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontWeight: 700,
+                              }}
+                              onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        ) : (
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              marginTop: '4px',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: 'var(--radius-sm)',
+                              padding: '2px 8px',
+                              backgroundColor: 'var(--bg-input)',
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: '0.85rem',
+                                color: 'var(--text-muted)',
+                                fontWeight: 600,
+                              }}
+                            >
+                              {currSymbol}
+                            </span>
+                            <input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              style={{
+                                width: '60px',
+                                border: 'none',
+                                background: 'transparent',
+                                color: 'var(--text-main)',
+                                fontWeight: 700,
+                                fontSize: '0.95rem',
+                                textAlign: 'right',
+                                outline: 'none',
+                              }}
+                              value={Number(
+                                (
+                                  item.quantity *
+                                  (item.custom_price ?? Number(item.product.selling_price))
+                                ).toFixed(2),
+                              )}
+                              onChange={(e) => {
+                                const amt = parseFloat(e.target.value) || 0;
+                                updateQuantity(
+                                  item.product.id,
+                                  amt / (item.custom_price ?? Number(item.product.selling_price)),
+                                );
+                              }}
+                            />
+                          </div>
+                        )}
                       </div>
 
                       <button
@@ -425,6 +608,47 @@ export const NewSale: React.FC = () => {
             Close
           </Button>
         </div>
+      </Modal>
+
+      {/* Custom Item Modal */}
+      <Modal
+        isOpen={isCustomItemOpen}
+        onClose={() => setIsCustomItemOpen(false)}
+        title="Add Custom Item"
+      >
+        <form
+          onSubmit={handleAddCustomItem}
+          style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '8px' }}
+        >
+          <Input
+            label="Item Name"
+            placeholder="e.g. Mixed Meat, Special Order"
+            value={customItemName}
+            onChange={(e) => setCustomItemName(e.target.value)}
+            required
+            autoFocus
+          />
+          <Input
+            label={`Total Amount (${currSymbol})`}
+            type="number"
+            min="0"
+            step="any"
+            placeholder="e.g. 1500"
+            value={customItemAmount}
+            onChange={(e) => setCustomItemAmount(e.target.value)}
+            required
+          />
+          <div
+            style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}
+          >
+            <Button type="button" variant="ghost" onClick={() => setIsCustomItemOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary">
+              Add to Cart
+            </Button>
+          </div>
+        </form>
       </Modal>
 
       {/* Confirmation Modal */}

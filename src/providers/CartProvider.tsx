@@ -24,7 +24,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const itemCount = useMemo(() => cart.reduce((acc, item) => acc + item.quantity, 0), [cart]);
 
   const subtotal = useMemo(
-    () => cart.reduce((acc, item) => acc + Number(item.product.selling_price) * item.quantity, 0),
+    () =>
+      cart.reduce(
+        (acc, item) =>
+          acc + (item.custom_price ?? Number(item.product.selling_price)) * item.quantity,
+        0,
+      ),
     [cart],
   );
 
@@ -35,17 +40,29 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const grossProfit = useMemo(() => subtotal - totalCost, [subtotal, totalCost]);
 
-  const addToCart = useCallback((product: Product, quantity = 1) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.product.id === product.id ? { ...item, quantity: item.quantity + quantity } : item,
+  const addToCart = useCallback(
+    (product: Product, quantity = 1, custom_name?: string, custom_price?: number) => {
+      setCart((prev) => {
+        const existing = prev.find(
+          (item) =>
+            item.product.id === product.id &&
+            item.custom_name === custom_name &&
+            item.custom_price === custom_price,
         );
-      }
-      return [...prev, { product, quantity }];
-    });
-  }, []);
+        if (existing) {
+          return prev.map((item) =>
+            item.product.id === product.id &&
+            item.custom_name === custom_name &&
+            item.custom_price === custom_price
+              ? { ...item, quantity: item.quantity + quantity }
+              : item,
+          );
+        }
+        return [...prev, { product, quantity, custom_name, custom_price }];
+      });
+    },
+    [],
+  );
 
   const updateQuantity = useCallback((productId: string, quantity: number) => {
     setCart((prev) => {
@@ -90,7 +107,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
 
       const saleItems: SaleItem[] = cart.map((item) => {
-        const lineTotal = Number(item.product.selling_price) * item.quantity;
+        const sellingPrice = item.custom_price ?? Number(item.product.selling_price);
+        const lineTotal = sellingPrice * item.quantity;
         const lineCost = Number(item.product.cost_price) * item.quantity;
         return {
           id: crypto.randomUUID(),
@@ -98,9 +116,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           product_id: item.product.id,
           quantity: item.quantity,
           unit_cost: Number(item.product.cost_price),
-          selling_price: Number(item.product.selling_price),
+          selling_price: sellingPrice,
           line_total: lineTotal,
           line_profit: lineTotal - lineCost,
+          custom_name: item.custom_name,
           created_at: now,
         };
       });
