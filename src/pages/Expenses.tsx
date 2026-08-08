@@ -522,9 +522,9 @@ export const Expenses: React.FC = () => {
                   >
                     Edit
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="danger" 
+                  <Button
+                    size="sm"
+                    variant="danger"
                     onClick={() => setDeleteTargetId(exp.id)}
                     style={{ width: '100%' }}
                   >

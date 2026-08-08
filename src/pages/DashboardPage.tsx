@@ -117,8 +117,6 @@ export const DashboardPage: React.FC = () => {
   const currencyObj = SUPPORTED_CURRENCIES.find((c) => c.code === business?.currency);
   const currencySymbol = currencyObj?.symbol || '₦';
 
-
-
   if (isLoading) {
     return (
       <div

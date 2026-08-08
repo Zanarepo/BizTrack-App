@@ -333,7 +333,7 @@ export const AppLayout: React.FC = () => {
             {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
             {showInstallButton && (
               <button
                 onClick={async () => {

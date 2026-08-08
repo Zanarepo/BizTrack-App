@@ -121,24 +121,46 @@ export const Landing: React.FC = () => {
             Biz<span className="text-gradient">Track</span>
           </h2>
         </div>
-        <div className="landing-actions" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'center', flexShrink: 1, maxWidth: '100%' }}>
+        <div
+          className="landing-actions"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            flexShrink: 1,
+            maxWidth: '100%',
+          }}
+        >
           <ThemeToggle />
           <LanguageSelector />
           {user ? (
             <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-              <Button variant="primary" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }} rightIcon={<ArrowRight size={12} />}>
+              <Button
+                variant="primary"
+                style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}
+                rightIcon={<ArrowRight size={12} />}
+              >
                 Dashboard
               </Button>
             </Link>
           ) : (
             <>
               <Link to="/login" style={{ textDecoration: 'none' }}>
-                <Button variant="outline" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}>
+                <Button
+                  variant="outline"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}
+                >
                   {t('signInButton').replace('', '')}
                 </Button>
               </Link>
               <Link to="/register" style={{ textDecoration: 'none' }}>
-                <Button variant="primary" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }} rightIcon={<ArrowRight size={12} />}>
+                <Button
+                  variant="primary"
+                  style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}
+                  rightIcon={<ArrowRight size={12} />}
+                >
                   {t('getStartedFree')}
                 </Button>
               </Link>
@@ -153,7 +175,15 @@ export const Landing: React.FC = () => {
           variant="success"
           showDot
           pulseDot
-          style={{ maxWidth: '100%', padding: '8px 16px', fontSize: '0.85rem', whiteSpace: 'normal', textAlign: 'center', height: 'auto', lineHeight: '1.4' }}
+          style={{
+            maxWidth: '100%',
+            padding: '8px 16px',
+            fontSize: '0.85rem',
+            whiteSpace: 'normal',
+            textAlign: 'center',
+            height: 'auto',
+            lineHeight: '1.4',
+          }}
         >
           <Sparkles size={14} style={{ marginRight: '6px' }} /> {t('heroBadge')} — Enterprise Grade
           Architecture
@@ -180,7 +210,7 @@ export const Landing: React.FC = () => {
           className="btn-group-responsive"
           style={{
             marginTop: '32px',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <Link to="/register" style={{ textDecoration: 'none' }}>

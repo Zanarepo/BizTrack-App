@@ -1002,3 +1002,9 @@ select option {
     gap: 16px !important;
   }
 }
+
+@media (max-width: 600px) {
+  .theme-toggle-text-full {
+    display: none;
+  }
+}

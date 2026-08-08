@@ -876,30 +876,65 @@ export const ReportsPage: React.FC = () => {
 
                   <div className="inventory-mobile-cards">
                     {salesData.transactions.length === 0 ? (
-                      <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      <div
+                        style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}
+                      >
                         No sales found for this period.
                       </div>
                     ) : (
                       salesData.transactions.map((t: SalesReportItem, i: number) => (
-                        <div key={i} style={{ backgroundColor: 'var(--bg-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', padding: '16px' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                        <div
+                          key={i}
+                          style={{
+                            backgroundColor: 'var(--bg-elevated)',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid var(--border-color)',
+                            padding: '16px',
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-start',
+                              marginBottom: '8px',
+                            }}
+                          >
                             <div>
                               <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>
                                 {new Date(t.date).toLocaleDateString()}
                               </div>
-                              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                              <div
+                                style={{
+                                  fontSize: '0.875rem',
+                                  color: 'var(--text-muted)',
+                                  marginTop: '2px',
+                                }}
+                              >
                                 {t.receiptNo}
                               </div>
                             </div>
-                            <div style={{ fontWeight: '700', color: 'var(--text-main)', fontSize: '1.125rem' }}>
+                            <div
+                              style={{
+                                fontWeight: '700',
+                                color: 'var(--text-main)',
+                                fontSize: '1.125rem',
+                              }}
+                            >
                               ₦{t.totalAmount.toLocaleString()}
                             </div>
                           </div>
-                          
-                          <div style={{ fontSize: '0.875rem', color: 'var(--text-main)', marginBottom: '12px' }}>
+
+                          <div
+                            style={{
+                              fontSize: '0.875rem',
+                              color: 'var(--text-main)',
+                              marginBottom: '12px',
+                            }}
+                          >
                             {t.productsSummary}
                           </div>
-                          
+
                           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <span
                               style={{
@@ -1246,23 +1281,49 @@ export const ReportsPage: React.FC = () => {
 
                   <div className="inventory-mobile-cards">
                     {expenseData.expenses.length === 0 ? (
-                      <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                      <div
+                        style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}
+                      >
                         No expenses found for this period.
                       </div>
                     ) : (
                       expenseData.expenses.map((e: ExpenseReportItem, i: number) => (
-                        <div key={i} style={{ backgroundColor: 'var(--bg-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', padding: '16px' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                        <div
+                          key={i}
+                          style={{
+                            backgroundColor: 'var(--bg-elevated)',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid var(--border-color)',
+                            padding: '16px',
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-start',
+                              marginBottom: '8px',
+                            }}
+                          >
                             <div>
                               <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>
                                 {new Date(e.date).toLocaleDateString()}
                               </div>
                             </div>
-                            <div style={{ fontWeight: '700', color: '#e11d48', fontSize: '1.125rem' }}>
+                            <div
+                              style={{ fontWeight: '700', color: '#e11d48', fontSize: '1.125rem' }}
+                            >
                               ₦{e.amount.toLocaleString()}
                             </div>
                           </div>
-                          <div style={{ fontSize: '0.875rem', fontWeight: '500', color: 'var(--text-main)', marginBottom: '4px' }}>
+                          <div
+                            style={{
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              color: 'var(--text-main)',
+                              marginBottom: '4px',
+                            }}
+                          >
                             {e.categoryName}
                           </div>
                           <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
@@ -1667,8 +1728,23 @@ export const ReportsPage: React.FC = () => {
 
                   <div className="inventory-mobile-cards">
                     {inventoryData.items.map((item: InventoryReportItem, i: number) => (
-                      <div key={i} style={{ backgroundColor: 'var(--bg-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', padding: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                      <div
+                        key={i}
+                        style={{
+                          backgroundColor: 'var(--bg-elevated)',
+                          borderRadius: 'var(--radius-md)',
+                          border: '1px solid var(--border-color)',
+                          padding: '16px',
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'flex-start',
+                            marginBottom: '8px',
+                          }}
+                        >
                           <div>
                             <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>
                               {item.name}
@@ -1677,17 +1753,35 @@ export const ReportsPage: React.FC = () => {
                               {item.sku} • {item.category}
                             </div>
                           </div>
-                          <div style={{ fontWeight: '700', color: '#0d9488', fontSize: '1.125rem', textAlign: 'right' }}>
+                          <div
+                            style={{
+                              fontWeight: '700',
+                              color: '#0d9488',
+                              fontSize: '1.125rem',
+                              textAlign: 'right',
+                            }}
+                          >
                             ₦{item.totalValue.toLocaleString()}
                           </div>
                         </div>
-                        
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--border-color)' }}>
+
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginTop: '12px',
+                            paddingTop: '12px',
+                            borderTop: '1px solid var(--border-color)',
+                          }}
+                        >
                           <div style={{ fontSize: '0.875rem' }}>
                             <span style={{ color: 'var(--text-muted)' }}>Stock: </span>
-                            <span style={{ fontWeight: '700', color: 'var(--text-main)' }}>{item.stock}</span>
+                            <span style={{ fontWeight: '700', color: 'var(--text-main)' }}>
+                              {item.stock}
+                            </span>
                           </div>
-                          
+
                           <span
                             style={{
                               display: 'inline-flex',
@@ -2151,247 +2245,278 @@ export const ReportsPage: React.FC = () => {
 
               {activeTab === 'history' && historyData && (
                 <>
-                <div
-                  style={{
-                    overflowX: 'auto',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--border-color)',
-                  }}
-                  className="inventory-desktop-table"
-                >
-                  <table style={{ minWidth: '100%' }}>
-                    <thead style={{ backgroundColor: 'var(--bg-app)' }}>
-                      <tr>
-                        <th
-                          style={{
-                            paddingLeft: '16px',
-                            paddingRight: '16px',
-                            paddingTop: '12px',
-                            paddingBottom: '12px',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            lineHeight: '1rem',
-                            fontWeight: '500',
-                            color: 'var(--text-muted)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                          }}
-                        >
-                          Date Generated
-                        </th>
-                        <th
-                          style={{
-                            paddingLeft: '16px',
-                            paddingRight: '16px',
-                            paddingTop: '12px',
-                            paddingBottom: '12px',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            lineHeight: '1rem',
-                            fontWeight: '500',
-                            color: 'var(--text-muted)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                          }}
-                        >
-                          Report Name
-                        </th>
-                        <th
-                          style={{
-                            paddingLeft: '16px',
-                            paddingRight: '16px',
-                            paddingTop: '12px',
-                            paddingBottom: '12px',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            lineHeight: '1rem',
-                            fontWeight: '500',
-                            color: 'var(--text-muted)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                          }}
-                        >
-                          Format
-                        </th>
-                        <th
-                          style={{
-                            paddingLeft: '16px',
-                            paddingRight: '16px',
-                            paddingTop: '12px',
-                            paddingBottom: '12px',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            lineHeight: '1rem',
-                            fontWeight: '500',
-                            color: 'var(--text-muted)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.05em',
-                          }}
-                        >
-                          Author
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody style={{ backgroundColor: 'var(--bg-elevated)' }}>
-                      {historyData.length === 0 ? (
+                  <div
+                    style={{
+                      overflowX: 'auto',
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid var(--border-color)',
+                    }}
+                    className="inventory-desktop-table"
+                  >
+                    <table style={{ minWidth: '100%' }}>
+                      <thead style={{ backgroundColor: 'var(--bg-app)' }}>
                         <tr>
-                          <td
-                            colSpan={4}
+                          <th
                             style={{
                               paddingLeft: '16px',
                               paddingRight: '16px',
-                              paddingTop: '32px',
-                              paddingBottom: '32px',
-                              textAlign: 'center',
+                              paddingTop: '12px',
+                              paddingBottom: '12px',
+                              textAlign: 'left',
+                              fontSize: '0.75rem',
+                              lineHeight: '1rem',
+                              fontWeight: '500',
                               color: 'var(--text-muted)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
                             }}
                           >
-                            No reports generated yet. Start exporting to build history.
-                          </td>
+                            Date Generated
+                          </th>
+                          <th
+                            style={{
+                              paddingLeft: '16px',
+                              paddingRight: '16px',
+                              paddingTop: '12px',
+                              paddingBottom: '12px',
+                              textAlign: 'left',
+                              fontSize: '0.75rem',
+                              lineHeight: '1rem',
+                              fontWeight: '500',
+                              color: 'var(--text-muted)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                            }}
+                          >
+                            Report Name
+                          </th>
+                          <th
+                            style={{
+                              paddingLeft: '16px',
+                              paddingRight: '16px',
+                              paddingTop: '12px',
+                              paddingBottom: '12px',
+                              textAlign: 'left',
+                              fontSize: '0.75rem',
+                              lineHeight: '1rem',
+                              fontWeight: '500',
+                              color: 'var(--text-muted)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                            }}
+                          >
+                            Format
+                          </th>
+                          <th
+                            style={{
+                              paddingLeft: '16px',
+                              paddingRight: '16px',
+                              paddingTop: '12px',
+                              paddingBottom: '12px',
+                              textAlign: 'left',
+                              fontSize: '0.75rem',
+                              lineHeight: '1rem',
+                              fontWeight: '500',
+                              color: 'var(--text-muted)',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                            }}
+                          >
+                            Author
+                          </th>
                         </tr>
-                      ) : (
-                        historyData.map((h: ReportHistory, i: number) => (
-                          <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                      </thead>
+                      <tbody style={{ backgroundColor: 'var(--bg-elevated)' }}>
+                        {historyData.length === 0 ? (
+                          <tr>
                             <td
+                              colSpan={4}
                               style={{
                                 paddingLeft: '16px',
                                 paddingRight: '16px',
-                                paddingTop: '12px',
-                                paddingBottom: '12px',
-                                whiteSpace: 'nowrap',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.25rem',
+                                paddingTop: '32px',
+                                paddingBottom: '32px',
+                                textAlign: 'center',
                                 color: 'var(--text-muted)',
                               }}
                             >
-                              {new Date(h.generatedAt).toLocaleString()}
+                              No reports generated yet. Start exporting to build history.
                             </td>
-                            <td
+                          </tr>
+                        ) : (
+                          historyData.map((h: ReportHistory, i: number) => (
+                            <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                              <td
+                                style={{
+                                  paddingLeft: '16px',
+                                  paddingRight: '16px',
+                                  paddingTop: '12px',
+                                  paddingBottom: '12px',
+                                  whiteSpace: 'nowrap',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.25rem',
+                                  color: 'var(--text-muted)',
+                                }}
+                              >
+                                {new Date(h.generatedAt).toLocaleString()}
+                              </td>
+                              <td
+                                style={{
+                                  paddingLeft: '16px',
+                                  paddingRight: '16px',
+                                  paddingTop: '12px',
+                                  paddingBottom: '12px',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.25rem',
+                                  fontWeight: '500',
+                                  color: 'var(--text-main)',
+                                }}
+                              >
+                                {h.reportName}
+                              </td>
+                              <td
+                                style={{
+                                  paddingLeft: '16px',
+                                  paddingRight: '16px',
+                                  paddingTop: '12px',
+                                  paddingBottom: '12px',
+                                  whiteSpace: 'nowrap',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.25rem',
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    padding: '2px 8px',
+                                    borderRadius: '4px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '500',
+                                    backgroundColor:
+                                      h.exportFormat === 'pdf'
+                                        ? 'rgba(239, 68, 68, 0.15)'
+                                        : h.exportFormat === 'xlsx'
+                                          ? 'rgba(34, 197, 94, 0.15)'
+                                          : 'rgba(107, 114, 128, 0.15)',
+                                    color:
+                                      h.exportFormat === 'pdf'
+                                        ? '#b91c1c'
+                                        : h.exportFormat === 'xlsx'
+                                          ? '#15803d'
+                                          : '#374151',
+                                  }}
+                                >
+                                  {h.exportFormat.toUpperCase()}
+                                </span>
+                              </td>
+                              <td
+                                style={{
+                                  paddingLeft: '16px',
+                                  paddingRight: '16px',
+                                  paddingTop: '12px',
+                                  paddingBottom: '12px',
+                                  whiteSpace: 'nowrap',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.25rem',
+                                  color: 'var(--text-muted)',
+                                }}
+                              >
+                                {h.generatedBy === user?.id
+                                  ? profile?.full_name || user?.email || 'Owner'
+                                  : h.generatedBy || 'Owner'}
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="inventory-mobile-cards">
+                    {historyData.length === 0 ? (
+                      <div
+                        style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}
+                      >
+                        No reports generated yet. Start exporting to build history.
+                      </div>
+                    ) : (
+                      historyData.map((h: ReportHistory, i: number) => (
+                        <div
+                          key={i}
+                          style={{
+                            backgroundColor: 'var(--bg-elevated)',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid var(--border-color)',
+                            padding: '16px',
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-start',
+                              marginBottom: '8px',
+                            }}
+                          >
+                            <div
                               style={{
-                                paddingLeft: '16px',
-                                paddingRight: '16px',
-                                paddingTop: '12px',
-                                paddingBottom: '12px',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.25rem',
-                                fontWeight: '500',
+                                fontWeight: '600',
                                 color: 'var(--text-main)',
+                                paddingRight: '8px',
                               }}
                             >
                               {h.reportName}
-                            </td>
-                            <td
+                            </div>
+                            <span
                               style={{
-                                paddingLeft: '16px',
-                                paddingRight: '16px',
-                                paddingTop: '12px',
-                                paddingBottom: '12px',
-                                whiteSpace: 'nowrap',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.25rem',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                padding: '2px 8px',
+                                borderRadius: '4px',
+                                fontSize: '0.75rem',
+                                fontWeight: '500',
+                                backgroundColor:
+                                  h.exportFormat === 'pdf'
+                                    ? 'rgba(239, 68, 68, 0.15)'
+                                    : h.exportFormat === 'xlsx'
+                                      ? 'rgba(34, 197, 94, 0.15)'
+                                      : 'rgba(107, 114, 128, 0.15)',
+                                color:
+                                  h.exportFormat === 'pdf'
+                                    ? '#b91c1c'
+                                    : h.exportFormat === 'xlsx'
+                                      ? '#15803d'
+                                      : '#374151',
                               }}
                             >
-                              <span
-                                style={{
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  padding: '2px 8px',
-                                  borderRadius: '4px',
-                                  fontSize: '0.75rem',
-                                  fontWeight: '500',
-                                  backgroundColor:
-                                    h.exportFormat === 'pdf'
-                                      ? 'rgba(239, 68, 68, 0.15)'
-                                      : h.exportFormat === 'xlsx'
-                                        ? 'rgba(34, 197, 94, 0.15)'
-                                        : 'rgba(107, 114, 128, 0.15)',
-                                  color:
-                                    h.exportFormat === 'pdf'
-                                      ? '#b91c1c'
-                                      : h.exportFormat === 'xlsx'
-                                        ? '#15803d'
-                                        : '#374151',
-                                }}
-                              >
-                                {h.exportFormat.toUpperCase()}
-                              </span>
-                            </td>
-                            <td
-                              style={{
-                                paddingLeft: '16px',
-                                paddingRight: '16px',
-                                paddingTop: '12px',
-                                paddingBottom: '12px',
-                                whiteSpace: 'nowrap',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.25rem',
-                                color: 'var(--text-muted)',
-                              }}
-                            >
+                              {h.exportFormat.toUpperCase()}
+                            </span>
+                          </div>
+
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              marginTop: '12px',
+                            }}
+                          >
+                            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                              {new Date(h.generatedAt).toLocaleString()}
+                            </div>
+
+                            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                              By:{' '}
                               {h.generatedBy === user?.id
                                 ? profile?.full_name || user?.email || 'Owner'
                                 : h.generatedBy || 'Owner'}
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="inventory-mobile-cards">
-                  {historyData.length === 0 ? (
-                    <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
-                      No reports generated yet. Start exporting to build history.
-                    </div>
-                  ) : (
-                    historyData.map((h: ReportHistory, i: number) => (
-                      <div key={i} style={{ backgroundColor: 'var(--bg-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', padding: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                          <div style={{ fontWeight: '600', color: 'var(--text-main)', paddingRight: '8px' }}>
-                            {h.reportName}
-                          </div>
-                          <span
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              padding: '2px 8px',
-                              borderRadius: '4px',
-                              fontSize: '0.75rem',
-                              fontWeight: '500',
-                              backgroundColor:
-                                h.exportFormat === 'pdf'
-                                  ? 'rgba(239, 68, 68, 0.15)'
-                                  : h.exportFormat === 'xlsx'
-                                    ? 'rgba(34, 197, 94, 0.15)'
-                                    : 'rgba(107, 114, 128, 0.15)',
-                              color:
-                                h.exportFormat === 'pdf'
-                                  ? '#b91c1c'
-                                  : h.exportFormat === 'xlsx'
-                                    ? '#15803d'
-                                    : '#374151',
-                            }}
-                          >
-                            {h.exportFormat.toUpperCase()}
-                          </span>
-                        </div>
-                        
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
-                          <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                            {new Date(h.generatedAt).toLocaleString()}
-                          </div>
-                          
-                          <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                            By: {h.generatedBy === user?.id
-                              ? profile?.full_name || user?.email || 'Owner'
-                              : h.generatedBy || 'Owner'}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  )}
-                </div>
+                      ))
+                    )}
+                  </div>
                 </>
               )}
             </div>
