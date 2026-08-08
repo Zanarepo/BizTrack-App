@@ -496,11 +496,11 @@ export const Expenses: React.FC = () => {
               <div
                 style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  flexDirection: 'column',
+                  gap: '12px',
                   marginTop: '6px',
                   borderTop: '1px solid var(--border-color)',
-                  paddingTop: '8px',
+                  paddingTop: '12px',
                 }}
               >
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -513,15 +513,21 @@ export const Expenses: React.FC = () => {
                     {formatCurrency(exp.amount)}
                   </span>
                 </div>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => navigate(`/expenses/edit/${exp.id}`)}
+                    style={{ width: '100%' }}
                   >
                     Edit
                   </Button>
-                  <Button size="sm" variant="danger" onClick={() => setDeleteTargetId(exp.id)}>
+                  <Button 
+                    size="sm" 
+                    variant="danger" 
+                    onClick={() => setDeleteTargetId(exp.id)}
+                    style={{ width: '100%' }}
+                  >
                     Delete
                   </Button>
                 </div>

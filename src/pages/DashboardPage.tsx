@@ -38,7 +38,6 @@ import {
   Wallet,
   Package,
   Layers,
-  Calendar,
   Sparkles,
   PlusCircle,
   Activity,
@@ -118,12 +117,7 @@ export const DashboardPage: React.FC = () => {
   const currencyObj = SUPPORTED_CURRENCIES.find((c) => c.code === business?.currency);
   const currencySymbol = currencyObj?.symbol || '₦';
 
-  const formattedDate = new Date().toLocaleDateString(undefined, {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+
 
   if (isLoading) {
     return (
@@ -192,27 +186,17 @@ export const DashboardPage: React.FC = () => {
               fontSize: '0.95rem',
               display: 'flex',
               alignItems: 'center',
+              flexWrap: 'wrap',
               gap: '6px',
             }}
           >
             <span>
               Welcome back, <strong>{profile?.full_name || user?.email || 'Entrepreneur'}</strong>!
             </span>
-            <span>•</span>
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px',
-                color: 'var(--text-main)',
-              }}
-            >
-              <Calendar size={15} /> {formattedDate}
-            </span>
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <div onClick={() => setIsSyncCenterOpen(true)}>
             <SyncIndicator />
           </div>
@@ -231,7 +215,7 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <CheckCircle2 size={15} />
-            <span>100% Operational Offline (No Internet Required)</span>
+            <span>Offline Ready</span>
           </div>
         </div>
       </div>

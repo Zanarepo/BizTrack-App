@@ -958,6 +958,12 @@ select option {
     gap: 12px !important;
   }
 
+  .btn-group-responsive > a,
+  .card-footer-container > a,
+  .form-action-row > a {
+    width: 100% !important;
+  }
+
   .btn-group-responsive .btn,
   .card-footer-container .btn,
   .form-action-row .btn,
@@ -971,11 +977,10 @@ select option {
 }
 
 @media (max-width: 480px) {
-  .btn {
-    white-space: normal !important;
-    word-break: break-word !important;
-    text-align: center !important;
-    line-height: 1.35 !important;
+  .btn-group-responsive,
+  .card-footer-container,
+  .form-action-row {
+    gap: 8px !important;
   }
 }
 

@@ -203,6 +203,8 @@ export const NewSale: React.FC = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px',
             width: '100%',
             borderBottom: '1px solid var(--border-color)',
             paddingBottom: '12px',

@@ -37,7 +37,7 @@ export const Landing: React.FC = () => {
   };
 
   const titleStyle: React.CSSProperties = {
-    fontSize: '3.6rem',
+    fontSize: 'clamp(2rem, 8vw, 3.6rem)',
     fontWeight: 900,
     lineHeight: 1.1,
     letterSpacing: '-0.03em',
@@ -99,18 +99,21 @@ export const Landing: React.FC = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '16px',
+          gap: '12px',
           position: 'relative',
           zIndex: 1,
+          padding: '12px 16px',
+          width: '100%',
+          boxSizing: 'border-box',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <TrendingUp size={30} color="var(--brand-primary)" strokeWidth={2.5} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 1 }}>
+          <TrendingUp size={24} color="var(--brand-primary)" strokeWidth={2.5} />
           <h2
             style={{
               fontWeight: 900,
               margin: 0,
-              fontSize: '1.7rem',
+              fontSize: 'clamp(1.2rem, 4vw, 1.7rem)',
               letterSpacing: '-0.03em',
               color: 'var(--text-main)',
             }}
@@ -118,24 +121,24 @@ export const Landing: React.FC = () => {
             Biz<span className="text-gradient">Track</span>
           </h2>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div className="landing-actions" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'center', flexShrink: 1, maxWidth: '100%' }}>
           <ThemeToggle />
           <LanguageSelector />
           {user ? (
             <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-              <Button variant="primary" size="sm" rightIcon={<ArrowRight size={16} />}>
-                Go to Dashboard
+              <Button variant="primary" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }} rightIcon={<ArrowRight size={12} />}>
+                Dashboard
               </Button>
             </Link>
           ) : (
             <>
               <Link to="/login" style={{ textDecoration: 'none' }}>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}>
                   {t('signInButton').replace('', '')}
                 </Button>
               </Link>
               <Link to="/register" style={{ textDecoration: 'none' }}>
-                <Button variant="primary" size="sm" rightIcon={<ArrowRight size={16} />}>
+                <Button variant="primary" style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }} rightIcon={<ArrowRight size={12} />}>
                   {t('getStartedFree')}
                 </Button>
               </Link>
@@ -150,7 +153,7 @@ export const Landing: React.FC = () => {
           variant="success"
           showDot
           pulseDot
-          style={{ padding: '6px 16px', fontSize: '0.85rem' }}
+          style={{ maxWidth: '100%', padding: '8px 16px', fontSize: '0.85rem', whiteSpace: 'normal', textAlign: 'center', height: 'auto', lineHeight: '1.4' }}
         >
           <Sparkles size={14} style={{ marginRight: '6px' }} /> {t('heroBadge')} — Enterprise Grade
           Architecture
@@ -162,7 +165,7 @@ export const Landing: React.FC = () => {
 
         <p
           style={{
-            fontSize: '1.25rem',
+            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
             color: 'var(--text-muted)',
             maxWidth: '640px',
             margin: 0,
@@ -174,12 +177,10 @@ export const Landing: React.FC = () => {
         </p>
 
         <div
+          className="btn-group-responsive"
           style={{
-            display: 'flex',
-            gap: '16px',
-            marginTop: '16px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
+            marginTop: '32px',
+            justifyContent: 'center'
           }}
         >
           <Link to="/register" style={{ textDecoration: 'none' }}>
