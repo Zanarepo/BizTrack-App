@@ -92,13 +92,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signIn = async (identifier: string, passwordOrPin?: string) => {
     const formattedEmail = formatAuthIdentifier(identifier);
+
+    // Check if user exists first
+    const { data: userExists } = await supabase.rpc('check_user_exists', {
+      p_identifier: formattedEmail,
+    });
+
     if (passwordOrPin) {
+      if (userExists === false) {
+        return { error: new Error('Account does not exist.'), user: null };
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formattedEmail,
         password: passwordOrPin,
       });
+
+      if (error && userExists) {
+        return { error: new Error('Incorrect password. Forgot password?'), user: null };
+      }
+
       return { error: error as Error | null, user: data?.user };
     } else {
+      if (userExists === false) {
+        return { error: new Error('Account does not exist.'), user: null };
+      }
       const { data, error } = await supabase.auth.signInWithOtp({ email: formattedEmail });
       return { error: error as Error | null, user: data?.user };
     }
@@ -116,6 +134,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     },
   ) => {
     const formattedEmail = formatAuthIdentifier(identifier);
+
+    // Check if user exists first
+    const { data: userExists } = await supabase.rpc('check_user_exists', {
+      p_identifier: formattedEmail,
+    });
+
+    if (userExists) {
+      return { error: new Error('User already exists. Please log in.') };
+    }
+
     const defaultPassword = passwordOrPin || `BizTrack!${Math.random().toString(36).slice(-8)}A1`;
 
     const { error } = await supabase.auth.signUp({

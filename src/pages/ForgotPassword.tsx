@@ -45,9 +45,7 @@ export const ForgotPassword: React.FC = () => {
           );
         }
       } else {
-        setErrorMessage(
-          'We could not locate an account or security question for this phone number.',
-        );
+        setErrorMessage('Account does not exist.');
       }
     } else {
       setRetrievedQuestion(question);
