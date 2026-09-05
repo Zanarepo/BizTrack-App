@@ -4,6 +4,7 @@ import { useInventory } from '../hooks/useInventory';
 import { useCart } from '../hooks/useCart';
 import { useBusiness } from '../hooks/useBusiness';
 import { useAuditLog } from '../hooks/useAuditLog';
+import type { ProductWithStock } from '../types/inventory';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { SearchInput } from '../components/SearchInput';
@@ -398,13 +399,23 @@ export const NewSale: React.FC = () => {
                                 border: '1px solid var(--border-color)',
                                 background: 'var(--bg-app)',
                                 color: 'var(--text-main)',
-                                cursor: 'pointer',
+                                cursor: (item.product as ProductWithStock).sku !== 'SYSTEM_CUSTOM' && item.quantity >= ((item.product as ProductWithStock).current_stock ?? Infinity) ? 'not-allowed' : 'pointer',
+                                opacity: (item.product as ProductWithStock).sku !== 'SYSTEM_CUSTOM' && item.quantity >= ((item.product as ProductWithStock).current_stock ?? Infinity) ? 0.5 : 1,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 fontWeight: 700,
                               }}
-                              onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                              disabled={(item.product as ProductWithStock).sku !== 'SYSTEM_CUSTOM' && item.quantity >= ((item.product as ProductWithStock).current_stock ?? Infinity)}
+                              onClick={() => {
+                                const p = item.product as ProductWithStock;
+                                const stock = p.current_stock ?? Infinity;
+                                if (p.sku !== 'SYSTEM_CUSTOM' && item.quantity + 1 > stock) {
+                                  setToast({ message: `Only ${stock} in stock.`, type: 'error' });
+                                } else {
+                                  updateQuantity(item.product.id, item.quantity + 1);
+                                }
+                              }}
                             >
                               +
                             </button>
@@ -453,10 +464,17 @@ export const NewSale: React.FC = () => {
                               )}
                               onChange={(e) => {
                                 const amt = parseFloat(e.target.value) || 0;
-                                updateQuantity(
-                                  item.product.id,
-                                  amt / (item.custom_price ?? Number(item.product.selling_price)),
-                                );
+                                const sellingPrice = item.custom_price ?? Number(item.product.selling_price);
+                                const newQty = amt / sellingPrice;
+                                const p = item.product as ProductWithStock;
+                                const stock = p.current_stock ?? Infinity;
+                                
+                                if (p.sku !== 'SYSTEM_CUSTOM' && newQty > stock) {
+                                  setToast({ message: `Only ${stock} in stock.`, type: 'error' });
+                                  updateQuantity(item.product.id, stock);
+                                } else {
+                                  updateQuantity(item.product.id, newQty);
+                                }
                               }}
                             />
                           </div>
